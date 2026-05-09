@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>lichtturm – Bau-Tutorial von luwymc</title>
+<title>LICHTTURM – Bau-Tutorial von luwymc</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Righteous&family=IBM+Plex+Mono:wght@400;700&display=swap');
-  :root { --col: #8b5cf6; --deep: #0a080e; --panel: #110e18; --border: #1e1830; --muted: #665577; --light: #f0eef8; --green: #2ecc71; }
+  :root { --col: #fbbf24; --deep: #080c0a; --panel: #0d1410; --border: #1a2820; --muted: #4a6050; --light: #e8f4ec; --green: #2ecc71; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--deep); color: var(--light); font-family: 'IBM Plex Mono', monospace; overflow-x: hidden; }
-  .hero { padding: 80px 48px 60px; border-bottom: 2px solid var(--col); background: radial-gradient(ellipse at 70% 40%, rgba(139,92,246,0.1) 0%, transparent 60%); }
+  .hero { padding: 80px 48px 60px; border-bottom: 2px solid var(--col); background: radial-gradient(ellipse at 60% 40%, rgba(14,165,233,0.08) 0%, transparent 60%); }
   .hero-eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--col); text-transform: uppercase; margin-bottom: 24px; }
-  .hero h1 { font-family: 'Righteous', sans-serif; font-size: clamp(60px, 12vw, 130px); line-height: 0.88; }
+  .hero h1 { font-family: 'Righteous', sans-serif; font-size: clamp(60px, 12vw, 140px); line-height: 0.88; }
   .hero h1 em { font-style: normal; color: var(--col); display: block; }
   .hero-desc { margin-top: 32px; font-size: 12px; line-height: 1.9; color: var(--muted); max-width: 480px; }
   .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
@@ -21,26 +21,61 @@
   .section { padding: 60px 0; border-bottom: 1px solid var(--border); }
   .section-label { font-size: 9px; letter-spacing: 5px; color: var(--col); text-transform: uppercase; margin-bottom: 10px; }
   .section h2 { font-family: 'Righteous', sans-serif; font-size: clamp(28px, 4vw, 48px); margin-bottom: 28px; }
+  .mat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .mat-card { background: var(--panel); border: 1px solid var(--border); padding: 20px 16px; transition: border-color 0.2s; }
+  .mat-card:hover { border-color: var(--col); }
+  .mat-card .ico { font-size: 24px; margin-bottom: 8px; }
+  .mat-card h3 { font-family: 'Righteous', sans-serif; font-size: 16px; margin-bottom: 6px; }
+  .mat-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
+  .mat-card .src { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: 2px; color: var(--green); text-transform: uppercase; }
   .step { display: grid; grid-template-columns: 60px 1fr; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--border); }
   .step-num { font-family: 'Righteous', sans-serif; font-size: 48px; color: var(--col); opacity: 0.5; line-height: 1; }
   .step h3 { font-family: 'Righteous', sans-serif; font-size: 22px; margin-bottom: 10px; }
   .step p { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 560px; }
-  .tip { margin-top: 12px; padding: 10px 14px; border-left: 3px solid var(--col); background: rgba(139,92,246,0.05); font-size: 11px; color: var(--col); line-height: 1.7; }
-  .footer { padding: 60px 40px; text-align: center; background: #070509; border-top: 2px solid var(--col); }
+  .tip { margin-top: 12px; padding: 10px 14px; border-left: 3px solid var(--col); background: rgba(0,0,0,0.15); font-size: 11px; color: var(--col); line-height: 1.7; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .tag { font-size: 9px; letter-spacing: 2px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; }
+  .footer { padding: 60px 40px; text-align: center; background: #050805; border-top: 2px solid var(--col); }
   .footer h2 { font-family: 'Righteous', sans-serif; font-size: clamp(36px, 8vw, 80px); color: var(--col); letter-spacing: 2px; }
   .footer p { font-size: 11px; color: var(--muted); margin-top: 14px; letter-spacing: 2px; }
-  @media (max-width: 600px) { .hero { padding: 60px 24px 48px; } .wrapper { padding: 0 24px; } }
+  @media (max-width: 600px) { .hero { padding: 60px 24px 48px; } .wrapper { padding: 0 24px; } .step { grid-template-columns: 44px 1fr; } }
 </style>
 </head>
 <body>
 <section class="hero">
   <div class="hero-eyebrow">Macher Festival · DIY Tutorial</div>
-  <h1>COMING<em>SOON</em></h1>
-  <p class="hero-desc">Dieses Tutorial wird gerade gebaut. Komm bald wieder!</p>
-  <div class="pill-row"><div class="pill col">In Arbeit</div></div>
+  <h1>LICHT<em>TURM</em></h1>
+  <p class="hero-desc">Metallgestell mit LED-Streifen – nachts das absolute Highlight auf dem Festival-Gelaende.</p>
+  <div class="pill-row">
+    <div class="pill col">Schweissen</div>
+    <div class="pill col">Loeten</div>
+    <div class="pill">~3 Tage</div>
+    <div class="pill">Wertstoffhof Material</div>
+  </div>
 </section>
+<div class="wrapper">
+<section class="section">
+  <div class="section-label">Material</div>
+  <h2>WAS DU BRAUCHST</h2>
+  <div class="mat-grid">
+    <div class="mat-card"><div class="ico">🔩</div><h3>Hauptmaterial</h3><p>Alles was du brauchst findest du auf dem Wertstoffhof oder hast du bereits zuhause.</p><span class="src">Wertstoffhof</span></div>
+    <div class="mat-card"><div class="ico">🪚</div><h3>Werkzeug</h3><p>Schweissen und Loeten – das Grundwerkzeug das du sowieso hast reicht völlig aus.</p><span class="src">hast du alles</span></div>
+    <div class="mat-card"><div class="ico">🎨</div><h3>Farbe</h3><p>Rostschutzfarbe und Spraylack für das Finish. Für Outdoor-Einsatz wetterfesten Lack verwenden.</p><span class="src">Baumarkt</span></div>
+    <div class="mat-card"><div class="ico">⏱️</div><h3>Zeit</h3><p>~3 Tage realistisch eingeplant. Lieber mehr Zeit lassen – gute Arbeit braucht Ruhe.</p><span class="src">dein Wochenende</span></div>
+  </div>
+</section>
+<section class="section">
+  <div class="section-label">Bauanleitung</div>
+  <h2>SCHRITT FÜR SCHRITT</h2>
+  <div class="step"><div class="step-num">01</div><div><h3>Material sammeln</h3><p>Wertstoffhof abklappern und alles brauchbare einsammeln. Nichts wegschmeißen – manchmal ist das unförmigste Teil das interessanteste. Material säubern und sortieren. Fotos vom Rohmaterial machen – Vorher-Nachher ist super Content!</p><div class="tip">💡 Immer mehr Material holen als du denkst zu brauchen. Reste kannst du für das nächste Projekt nutzen.</div><div class="tags"><span class="tag">Wertstoffhof</span><span class="tag">Sortieren</span></div></div></div>
+  <div class="step"><div class="step-num">02</div><div><h3>Grundstruktur</h3><p>Die tragende Struktur zuerst bauen. Das ist das Fundament. Lieber einmal mehr messen als einmal zu wenig. Stabilität geht vor Schönheit – schön wird es durch das Finish. Trocken zusammenstecken bevor du schweißt oder schraubst.</p><div class="tip">💡 Wenn du schweißt: immer Schutzbrille und Handschuhe. Schweißspritzer sind heiß!</div><div class="tags"><span class="tag">Schweissen</span><span class="tag">Loeten</span></div></div></div>
+  <div class="step"><div class="step-num">03</div><div><h3>Details ausarbeiten</h3><p>Kanten schleifen, Verbindungen verstärken, alles auf Festigkeit testen. Das ist die Phase wo aus einem rohen Konstrukt ein echtes Projekt wird. Alle scharfen Kanten müssen weg – besonders wenn Leute auf dem Festival dran anfassen.</p><div class="tip">💡 Lass jemanden drüberschauen – frische Augen sehen Probleme die du selbst nicht mehr siehst.</div><div class="tags"><span class="tag">Schleifpapier</span><span class="tag">Feile</span><span class="tag">Test</span></div></div></div>
+  <div class="step"><div class="step-num">04</div><div><h3>Lackieren</h3><p>Erst Rostschutzgrundierung, dann Decklack. 2 dünne Schichten sind besser als eine dicke. Für Festival-Einsatz unbedingt wetterfesten Lack – es kann regnen. Schwarzer Matt-Lack mit farbigen Akzenten sieht immer gut aus.</p><div class="tip">💡 Bei Spraylack immer draußen oder mit guter Belüftung arbeiten. Atemschutz nicht vergessen!</div><div class="tags"><span class="tag">Rostschutz</span><span class="tag">Spraylack</span></div></div></div>
+  <div class="step"><div class="step-num">05</div><div><h3>Festival-Ready machen</h3><p>Alles nochmal testen. Schrauben nachziehen. Ersatzteile einpacken. Ein "SPIEL MICH" oder "DREH MICH" Schild anbringen – Leute trauen sich ohne Aufforderung oft nicht. Transportieren: zerlegt ist meist einfacher als komplett.</p><div class="tip">💡 QR-Code zur Website ausdrucken und ans Projekt hängen – so kommen Leute direkt auf deine Tutorials!</div><div class="tags"><span class="tag">Schild</span><span class="tag">QR-Code</span><span class="tag">Ersatzteile</span></div></div></div>
+</section>
+</div>
 <footer class="footer">
-  <h2>BALD DA</h2>
+  <h2>MACH ES<br>EINFACH</h2>
   <p>Macher Festival · Ferropolis · 6.–9. August 2026</p>
   <p style="margin-top:14px; font-size:11px; letter-spacing:3px; color:var(--col);">von luwymc</p>
 </footer>
