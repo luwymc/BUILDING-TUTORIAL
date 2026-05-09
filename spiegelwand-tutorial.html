@@ -43,23 +43,21 @@
   .footer h2{font-family:'Righteous',sans-serif;font-size:clamp(36px,8vw,80px);color:var(--col);letter-spacing:2px;line-height:1}
   .footer p{font-size:11px;color:var(--muted);margin-top:14px;letter-spacing:2px}
   @media(max-width:600px){.hero{padding:60px 24px 48px}.wrapper{padding:0 24px}.step{grid-template-columns:44px 1fr;gap:14px}}
-  .top-nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content:space-between;align-items:center;padding:14px 32px;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid #1f1f1f}
-  .nav-home{font-family:"Righteous",sans-serif;font-size:14px;letter-spacing:2px;color:#e85d04;text-decoration:none;transition:opacity .2s}
+
+  .top-nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content:space-between;align-items:center;padding:16px 40px;background:rgba(10,10,10,0.97);backdrop-filter:blur(20px);border-bottom:1px solid #1f1f1f}
+  .nav-home{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#e85d04;text-decoration:none;transition:opacity .2s}
   .nav-home:hover{opacity:0.7}
-  .nav-save{display:flex;align-items:center;gap:8px;background:#e85d04;color:white;border:none;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:10px 18px;cursor:pointer;transition:opacity .2s}
-  .nav-save:hover{opacity:0.8}
-  .nav-save.saved{background:#2ecc71}
-  .hero{padding-top:120px!important}
-  .visitor-section{padding:40px 48px;background:#080808;border-top:1px solid #1f1f1f;text-align:center}
-  .visitor-label{font-size:9px;letter-spacing:5px;color:#e85d04;text-transform:uppercase;margin-bottom:16px}
-  .visitor-count{font-family:"Righteous",sans-serif;font-size:64px;color:#e85d04;line-height:1}
-  .visitor-sub{font-size:11px;color:#444;margin-top:8px;letter-spacing:2px}
+  .nav-save{display:inline-flex;align-items:center;gap:8px;background:#e85d04;color:white;border:none;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:12px 22px;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .nav-save:hover{opacity:0.85;transform:translateY(-1px)}
+  .nav-save.saved{background:#2ecc71;color:#000}
+  .hero-padding{padding-top:130px!important}
 </style></head><body>
+
 <nav class="top-nav">
   <a href="index.html" class="nav-home">← HOME</a>
-  <button class="nav-save" onclick="savePage(this)">💾 Seite speichern</button>
+  <button class="nav-save" onclick="savePage(this)">&#128190; SEITE SPEICHERN</button>
 </nav>
-<section class="hero"><div class="hero-eyebrow">Macher Festival . DIY Tutorial</div>
+<section class="hero" style="padding-top:130px"><div class="hero-eyebrow">Macher Festival . DIY Tutorial</div>
 <h1>SPIEGEL<em>WAND</em></h1><p class="hero-desc">Alte Spiegel in einem Metallrahmen - Menschen bleiben stehen, schauen sich an und machen Fotos. Einer der fotogensten Builds.</p>
 <div class="pill-row"><div class="pill col">Schweissen</div><div class="pill col">Kleben</div><div class="pill">~3 Tage</div><div class="pill">1,5x2m Rahmen</div><div class="pill">Sehr fotogen</div></div></section>
 <div class="wrapper">
@@ -93,16 +91,18 @@
 <p>Macher Festival . Ferropolis . 6.-9. August 2026</p>
 <p style="margin-top:14px;font-size:11px;letter-spacing:3px;color:var(--col);">von luwymc</p>
 </footer>
-<div class="visitor-section">
-  <div class="visitor-label">Seitenaufrufe</div>
-  <div class="visitor-count" id="visitCount">...</div>
+<div class="visitor-count" id="visitCount">...</div>
   <div class="visitor-sub">Besuche auf dieser Seite (lokal gezaehlt)</div>
 </div>
 <script>
+// Track this page visit
 const key = "visits_spiegelwand";
 const visits = parseInt(localStorage.getItem(key) || "0") + 1;
 localStorage.setItem(key, visits);
-document.getElementById("visitCount").textContent = visits.toLocaleString("de-DE");
+// Add to total visit counter
+const totalKey = "visits_total";
+const total = parseInt(localStorage.getItem(totalKey) || "0") + 1;
+localStorage.setItem(totalKey, total);
 
 function savePage(btn) {
   const link = document.createElement("a");
@@ -116,6 +116,22 @@ function savePage(btn) {
   setTimeout(() => {
     btn.textContent = "💾 Seite speichern";
     btn.classList.remove("saved");
+  }, 3000);
+}
+</script>
+<script>
+function savePage(btn) {
+  const link = document.createElement('a');
+  link.href = window.location.href;
+  link.download = 'spiegelwand-tutorial.html';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  btn.textContent = '✅ GESPEICHERT!';
+  btn.classList.add('saved');
+  setTimeout(() => {
+    btn.innerHTML = '&#128190; SEITE SPEICHERN';
+    btn.classList.remove('saved');
   }, 3000);
 }
 </script>
