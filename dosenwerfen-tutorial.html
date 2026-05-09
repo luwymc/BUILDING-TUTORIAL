@@ -1,83 +1,79 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DOSENWERFEN – Bau-Tutorial von luwymc</title>
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dosenwerfen - Tutorial von luwymc</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Righteous&family=IBM+Plex+Mono:wght@400;700&display=swap');
-  :root { --col: #10b981; --deep: #080c0a; --panel: #0d1410; --border: #1a2820; --muted: #4a6050; --light: #e8f4ec; --green: #2ecc71; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--deep); color: var(--light); font-family: 'IBM Plex Mono', monospace; overflow-x: hidden; }
-  .hero { padding: 80px 48px 60px; border-bottom: 2px solid var(--col); background: radial-gradient(ellipse at 60% 40%, rgba(14,165,233,0.08) 0%, transparent 60%); }
-  .hero-eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--col); text-transform: uppercase; margin-bottom: 24px; }
-  .hero h1 { font-family: 'Righteous', sans-serif; font-size: clamp(60px, 12vw, 140px); line-height: 0.88; }
-  .hero h1 em { font-style: normal; color: var(--col); display: block; }
-  .hero-desc { margin-top: 32px; font-size: 12px; line-height: 1.9; color: var(--muted); max-width: 480px; }
-  .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-  .pill { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; padding: 7px 16px; border: 1px solid var(--border); color: var(--muted); }
-  .pill.col { border-color: var(--col); color: var(--col); }
-  .wrapper { max-width: 900px; margin: 0 auto; padding: 0 40px; }
-  .section { padding: 60px 0; border-bottom: 1px solid var(--border); }
-  .section-label { font-size: 9px; letter-spacing: 5px; color: var(--col); text-transform: uppercase; margin-bottom: 10px; }
-  .section h2 { font-family: 'Righteous', sans-serif; font-size: clamp(28px, 4vw, 48px); margin-bottom: 28px; }
-  .mat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-  .mat-card { background: var(--panel); border: 1px solid var(--border); padding: 20px 16px; transition: border-color 0.2s; }
-  .mat-card:hover { border-color: var(--col); }
-  .mat-card .ico { font-size: 24px; margin-bottom: 8px; }
-  .mat-card h3 { font-family: 'Righteous', sans-serif; font-size: 16px; margin-bottom: 6px; }
-  .mat-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
-  .mat-card .src { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: 2px; color: var(--green); text-transform: uppercase; }
-  .step { display: grid; grid-template-columns: 60px 1fr; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--border); }
-  .step-num { font-family: 'Righteous', sans-serif; font-size: 48px; color: var(--col); opacity: 0.5; line-height: 1; }
-  .step h3 { font-family: 'Righteous', sans-serif; font-size: 22px; margin-bottom: 10px; }
-  .step p { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 560px; }
-  .tip { margin-top: 12px; padding: 10px 14px; border-left: 3px solid var(--col); background: rgba(0,0,0,0.15); font-size: 11px; color: var(--col); line-height: 1.7; }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-  .tag { font-size: 9px; letter-spacing: 2px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; }
-  .footer { padding: 60px 40px; text-align: center; background: #050805; border-top: 2px solid var(--col); }
-  .footer h2 { font-family: 'Righteous', sans-serif; font-size: clamp(36px, 8vw, 80px); color: var(--col); letter-spacing: 2px; }
-  .footer p { font-size: 11px; color: var(--muted); margin-top: 14px; letter-spacing: 2px; }
-  @media (max-width: 600px) { .hero { padding: 60px 24px 48px; } .wrapper { padding: 0 24px; } .step { grid-template-columns: 44px 1fr; } }
-</style>
-</head>
-<body>
-<section class="hero">
-  <div class="hero-eyebrow">Macher Festival · DIY Tutorial</div>
-  <h1>DOSEN<em>WERFEN</em></h1>
-  <p class="hero-desc">Geschweisster Metallstaender fuer das Klassikersspiel – Dosen stapeln, abwerfen, jubeln.</p>
-  <div class="pill-row">
-    <div class="pill col">Schweissen</div>
-    <div class="pill col">Flexen</div>
-    <div class="pill">~1 Tag</div>
-    <div class="pill">Wertstoffhof Material</div>
-  </div>
+  :root{--col:#e85d04;--deep:#0a0a0a;--panel:#111;--border:#1f1f1f;--muted:#666;--light:#f0ece4;--green:#2ecc71}
+  *{box-sizing:border-box;margin:0;padding:0}body{background:var(--deep);color:var(--light);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+  body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999}
+  .hero{padding:80px 48px 60px;border-bottom:2px solid var(--col);background:radial-gradient(ellipse at 60% 40%,rgba(232,93,4,0.1) 0%,transparent 60%)}
+  .hero-eyebrow{font-size:10px;letter-spacing:5px;color:var(--col);text-transform:uppercase;margin-bottom:24px}
+  .hero h1{font-family:'Righteous',sans-serif;font-size:clamp(60px,12vw,140px);line-height:0.88}
+  .hero h1 em{font-style:normal;color:var(--col);display:block}
+  .hero-desc{margin-top:32px;font-size:12px;line-height:1.9;color:var(--muted);max-width:480px}
+  .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .pill{font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:7px 16px;border:1px solid var(--border);color:var(--muted)}
+  .pill.col{border-color:var(--col);color:var(--col)}
+  .wrapper{max-width:900px;margin:0 auto;padding:0 40px}
+  .section{padding:60px 0;border-bottom:1px solid var(--border)}
+  .section-label{font-size:9px;letter-spacing:5px;color:var(--col);text-transform:uppercase;margin-bottom:10px}
+  .section h2{font-family:'Righteous',sans-serif;font-size:clamp(28px,4vw,48px);margin-bottom:28px}
+  .mat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .mat-card{background:var(--panel);border:1px solid var(--border);padding:20px 16px;transition:border-color .2s,transform .2s}
+  .mat-card:hover{border-color:var(--col);transform:translateY(-2px)}
+  .mat-card .ico{font-size:24px;margin-bottom:8px}
+  .mat-card h3{font-family:'Righteous',sans-serif;font-size:16px;margin-bottom:6px}
+  .mat-card p{font-size:11px;color:var(--muted);line-height:1.7}
+  .mat-card .src{display:inline-block;margin-top:8px;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase}
+  .stat-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:11px}
+  .stat-table th{text-align:left;padding:10px 16px;border-bottom:1px solid var(--col);color:var(--col);font-size:9px;letter-spacing:3px;text-transform:uppercase}
+  .stat-table td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--muted)}
+  .stat-table tr:hover td{background:#141414}
+  .step{display:grid;grid-template-columns:60px 1fr;gap:24px;padding:32px 0;border-bottom:1px solid #181818}
+  .step-num{font-family:'Righteous',sans-serif;font-size:48px;color:var(--col);opacity:.5;line-height:1}
+  .step h3{font-family:'Righteous',sans-serif;font-size:22px;margin-bottom:10px}
+  .step p{font-size:12px;color:var(--muted);line-height:1.9;max-width:560px}
+  .tip{margin-top:12px;padding:10px 14px;border-left:3px solid var(--col);background:rgba(232,93,4,.05);font-size:11px;color:var(--col);line-height:1.7}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .tag{font-size:9px;letter-spacing:2px;padding:4px 10px;border:1px solid var(--border);color:var(--muted);text-transform:uppercase}
+  .safety-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:20px}
+  .safety-card{background:var(--panel);border:1px solid var(--border);padding:18px;display:flex;gap:12px;align-items:flex-start}
+  .safety-card .ico{font-size:20px;flex-shrink:0}
+  .safety-card p{font-size:11px;color:var(--muted);line-height:1.7}
+  .footer{padding:60px 40px;text-align:center;background:#080808;border-top:2px solid var(--col)}
+  .footer h2{font-family:'Righteous',sans-serif;font-size:clamp(36px,8vw,80px);color:var(--col);letter-spacing:2px;line-height:1}
+  .footer p{font-size:11px;color:var(--muted);margin-top:14px;letter-spacing:2px}
+  @media(max-width:600px){.hero{padding:60px 24px 48px}.wrapper{padding:0 24px}.step{grid-template-columns:44px 1fr;gap:14px}}
+</style></head><body>
+<section class="hero"><div class="hero-eyebrow">Macher Festival . DIY Tutorial</div>
+<h1>DOSEN<em>WERFEN</em></h1><p class="hero-desc">Geschweisster Metallstaender fuer das Klassikerspiel - Dosen stapeln, abwerfen, jubeln. Simpelste Mechanik, maximaler Spass.</p>
+<div class="pill-row"><div class="pill col">Schweissen</div><div class="pill col">Flexen</div><div class="pill">~1 Tag</div><div class="pill">5m Wurfentfernung</div></div></section>
+<div class="wrapper"><section class="section"><div class="section-label">Material</div><h2>WAS DU BRAUCHST</h2><div class="mat-grid">
+<div class="mat-card"><div class="ico">🥫</div><h3>Metalldosen</h3><p>9-12 leere Konservendosen, alle gleich gross. Gefuellt mit etwas Sand macht sie stabiler zum Stapeln.</p><span class="src">Haushalt / Wertstoffhof</span></div>
+<div class="mat-card"><div class="ico">🏗️</div><h3>Staender</h3><p>Geschweisster Metallstaender als Ablageflaeche fuer die Dosen. Ca. 80x80cm, Hoehe 80-100cm.</p><span class="src">Wertstoffhof</span></div>
+<div class="mat-card"><div class="ico">⚾</div><h3>Wurfbälle</h3><p>3-5 Tennisbaelle oder selbstgemachte Stoffbaelle. Metallbaelle sind zu gefaehrlich!</p><span class="src">Sportmarkt / Haushalt</span></div>
+<div class="mat-card"><div class="ico">🎨</div><h3>Farbe</h3><p>Dosen bunt lackieren - abwechselnd in 2 Farben fuer bessere Sichtbarkeit beim Stapeln.</p><span class="src">Baumarkt</span></div>
+</div></section>
+<section class="section"><div class="section-label">Statistik</div><h2>MASSE & AUFBAU</h2>
+<table class="stat-table"><thead><tr><th>Element</th><th>Mass / Wert</th><th>Hinweis</th></tr></thead><tbody>
+<tr><td>Dosengrösse</td><td>400-850 ml Konservend.</td><td>Alle gleich gross!</td></tr>
+<tr><td>Stapelhoehe</td><td>3 Reihen (6-3-1 oder 4-3-2)</td><td>Klassisch: Pyramide</td></tr>
+<tr><td>Staenderflaeche</td><td>60x60 cm Minimum</td><td>Fuer 4er Basis</td></tr>
+<tr><td>Staenderhoehe</td><td>80-100 cm</td><td>Komfortable Wurfhoehe</td></tr>
+<tr><td>Wurfentfernung</td><td>4-6 m</td><td>Je nach Alter anpassen</td></tr>
+<tr><td>Wurfball Durchmesser</td><td>6-7 cm (Tennisball)</td><td>Kein Metall!</td></tr>
+</tbody></table></section>
+<section class="section"><div class="section-label">Bauanleitung</div><h2>SCHRITT FUER SCHRITT</h2>
+<div class="step"><div class="step-num">01</div><div><h3>Staender schweissen</h3><p>Vierkantrohr 30x30mm zu einem stabilen Rahmen schweissen: 4 Beine (je 80-100cm), verbunden durch eine Ablageflaeche oben (60x60cm aus Flachstahl oder Blech). Alle Ecken verstaerken. Staender muss auch dann nicht umfallen wenn jemand dagegen rennt.</p><div class="tip">Gitter als Ablagefleache schweissen (kein Blech) - so koennen umgeworfene Dosen besser durchfallen und der Aufbau geht schneller.</div><div class="tags"><span class="tag">Vierkantrohr</span><span class="tag">Schweissgeraet</span></div></div></div>
+<div class="step"><div class="step-num">02</div><div><h3>Dosen vorbereiten</h3><p>Leere Dosen mit ca. 100g Sand fuellen und wieder zudruecken (oder zukleben). Das macht sie stabiler beim Stapeln und verhindert dass sie bei Wind wegfliegen. Dosen lackieren: abwechselnd zwei Farben damit man schnell sieht wie der Stapel aufgebaut ist.</p><div class="tip">Dosendeckel eindruecken und mit starkem Klebeband sichern bevor du lackierst - so koennen keine Scharfen Kanten entstehen.</div><div class="tags"><span class="tag">Sand</span><span class="tag">Spruehlack</span></div></div></div>
+<div class="step"><div class="step-num">03</div><div><h3>Wurfzone einrichten</h3><p>Wurfline mit Kreide oder Klebeband auf dem Boden markieren. Abstand: 4-5m fuer Erwachsene, 2-3m fuer Kinder. Bereich hinter dem Staender sichern - niemand soll hinter den Dosen stehen wenn geworfen wird. Fahnguet oder Absperrband als Begrenzung.</p><div class="tip">Verschiedene Wurflinien in verschiedenen Farben fuer verschiedene Schwierigkeitsgrade: 3m, 5m, 7m.</div><div class="tags"><span class="tag">Wurfline</span><span class="tag">Absperrung</span></div></div></div>
+<div class="step"><div class="step-num">04</div><div><h3>Regelschild und Betrieb</h3><p>Regeln auf ein wetterfestes Schild: Wie viele Wuerfe, wie Punkte zaehlen, wie der Stapel aufgebaut wird. Dosen-Aufbauplan auf dem Staender markieren damit jeder schnell aufbauen kann ohne zu ueberlegen. Kurze Einweisung: 10 Sekunden erklaert.</p><div class="tip">Hochscore-Tafel aufstellen - Leute lieben es ihren Namen einzutragen. Schafft Wettbewerb und Gespraechsstoff.</div><div class="tags"><span class="tag">Regelschild</span><span class="tag">Highscore</span></div></div></div>
 </section>
-<div class="wrapper">
-<section class="section">
-  <div class="section-label">Material</div>
-  <h2>WAS DU BRAUCHST</h2>
-  <div class="mat-grid">
-    <div class="mat-card"><div class="ico">🔩</div><h3>Hauptmaterial</h3><p>Alles was du brauchst findest du auf dem Wertstoffhof oder hast du bereits zuhause.</p><span class="src">Wertstoffhof</span></div>
-    <div class="mat-card"><div class="ico">🪚</div><h3>Werkzeug</h3><p>Schweissen und Flexen – das Grundwerkzeug das du sowieso hast reicht völlig aus.</p><span class="src">hast du alles</span></div>
-    <div class="mat-card"><div class="ico">🎨</div><h3>Farbe</h3><p>Rostschutzfarbe und Spraylack für das Finish. Für Outdoor-Einsatz wetterfesten Lack verwenden.</p><span class="src">Baumarkt</span></div>
-    <div class="mat-card"><div class="ico">⏱️</div><h3>Zeit</h3><p>~1 Tag realistisch eingeplant. Lieber mehr Zeit lassen – gute Arbeit braucht Ruhe.</p><span class="src">dein Wochenende</span></div>
-  </div>
-</section>
-<section class="section">
-  <div class="section-label">Bauanleitung</div>
-  <h2>SCHRITT FÜR SCHRITT</h2>
-  <div class="step"><div class="step-num">01</div><div><h3>Material sammeln</h3><p>Wertstoffhof abklappern und alles brauchbare einsammeln. Nichts wegschmeißen – manchmal ist das unförmigste Teil das interessanteste. Material säubern und sortieren. Fotos vom Rohmaterial machen – Vorher-Nachher ist super Content!</p><div class="tip">💡 Immer mehr Material holen als du denkst zu brauchen. Reste kannst du für das nächste Projekt nutzen.</div><div class="tags"><span class="tag">Wertstoffhof</span><span class="tag">Sortieren</span></div></div></div>
-  <div class="step"><div class="step-num">02</div><div><h3>Grundstruktur</h3><p>Die tragende Struktur zuerst bauen. Das ist das Fundament. Lieber einmal mehr messen als einmal zu wenig. Stabilität geht vor Schönheit – schön wird es durch das Finish. Trocken zusammenstecken bevor du schweißt oder schraubst.</p><div class="tip">💡 Wenn du schweißt: immer Schutzbrille und Handschuhe. Schweißspritzer sind heiß!</div><div class="tags"><span class="tag">Schweissen</span><span class="tag">Flexen</span></div></div></div>
-  <div class="step"><div class="step-num">03</div><div><h3>Details ausarbeiten</h3><p>Kanten schleifen, Verbindungen verstärken, alles auf Festigkeit testen. Das ist die Phase wo aus einem rohen Konstrukt ein echtes Projekt wird. Alle scharfen Kanten müssen weg – besonders wenn Leute auf dem Festival dran anfassen.</p><div class="tip">💡 Lass jemanden drüberschauen – frische Augen sehen Probleme die du selbst nicht mehr siehst.</div><div class="tags"><span class="tag">Schleifpapier</span><span class="tag">Feile</span><span class="tag">Test</span></div></div></div>
-  <div class="step"><div class="step-num">04</div><div><h3>Lackieren</h3><p>Erst Rostschutzgrundierung, dann Decklack. 2 dünne Schichten sind besser als eine dicke. Für Festival-Einsatz unbedingt wetterfesten Lack – es kann regnen. Schwarzer Matt-Lack mit farbigen Akzenten sieht immer gut aus.</p><div class="tip">💡 Bei Spraylack immer draußen oder mit guter Belüftung arbeiten. Atemschutz nicht vergessen!</div><div class="tags"><span class="tag">Rostschutz</span><span class="tag">Spraylack</span></div></div></div>
-  <div class="step"><div class="step-num">05</div><div><h3>Festival-Ready machen</h3><p>Alles nochmal testen. Schrauben nachziehen. Ersatzteile einpacken. Ein "SPIEL MICH" oder "DREH MICH" Schild anbringen – Leute trauen sich ohne Aufforderung oft nicht. Transportieren: zerlegt ist meist einfacher als komplett.</p><div class="tip">💡 QR-Code zur Website ausdrucken und ans Projekt hängen – so kommen Leute direkt auf deine Tutorials!</div><div class="tags"><span class="tag">Schild</span><span class="tag">QR-Code</span><span class="tag">Ersatzteile</span></div></div></div>
-</section>
-</div>
-<footer class="footer">
-  <h2>MACH ES<br>EINFACH</h2>
-  <p>Macher Festival · Ferropolis · 6.–9. August 2026</p>
-  <p style="margin-top:14px; font-size:11px; letter-spacing:3px; color:var(--col);">von luwymc</p>
-</footer>
-</body>
-</html>
+<section class="section"><div class="section-label">Wichtig</div><h2>SICHERHEIT</h2><div class="safety-grid">
+<div class="safety-card"><div class="ico">⚾</div><p><strong>Nur weiche Bälle:</strong> Tennisbaelle oder Stoffbaelle. Keine harten Baelle oder Metallkugeln - Verletzungsgefahr!</p></div>
+<div class="safety-card"><div class="ico">🥫</div><p><strong>Scharfe Kanten:</strong> Alle Dosenraender sorgfaeltig einbiegen oder mit Klebeband abdecken. Schnittgefahr!</p></div>
+<div class="safety-card"><div class="ico">🎯</div><p><strong>Sicherheitsbereich:</strong> Niemand hinter dem Staender waehrend des Spiels. Klare Abgrenzung!</p></div>
+</div></section></div>
+<footer class="footer"><h2>WIRF UND<br>JUBEL</h2>
+<p>Macher Festival . Ferropolis . 6.-9. August 2026</p>
+<p style="margin-top:14px;font-size:11px;letter-spacing:3px;color:var(--col);">von luwymc</p>
+</footer></body></html>

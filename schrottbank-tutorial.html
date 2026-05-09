@@ -1,83 +1,80 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SCHROTTBANK – Bau-Tutorial von luwymc</title>
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schrottbank - Tutorial von luwymc</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Righteous&family=IBM+Plex+Mono:wght@400;700&display=swap');
-  :root { --col: #d97706; --deep: #080c0a; --panel: #0d1410; --border: #1a2820; --muted: #4a6050; --light: #e8f4ec; --green: #2ecc71; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--deep); color: var(--light); font-family: 'IBM Plex Mono', monospace; overflow-x: hidden; }
-  .hero { padding: 80px 48px 60px; border-bottom: 2px solid var(--col); background: radial-gradient(ellipse at 60% 40%, rgba(14,165,233,0.08) 0%, transparent 60%); }
-  .hero-eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--col); text-transform: uppercase; margin-bottom: 24px; }
-  .hero h1 { font-family: 'Righteous', sans-serif; font-size: clamp(60px, 12vw, 140px); line-height: 0.88; }
-  .hero h1 em { font-style: normal; color: var(--col); display: block; }
-  .hero-desc { margin-top: 32px; font-size: 12px; line-height: 1.9; color: var(--muted); max-width: 480px; }
-  .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-  .pill { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; padding: 7px 16px; border: 1px solid var(--border); color: var(--muted); }
-  .pill.col { border-color: var(--col); color: var(--col); }
-  .wrapper { max-width: 900px; margin: 0 auto; padding: 0 40px; }
-  .section { padding: 60px 0; border-bottom: 1px solid var(--border); }
-  .section-label { font-size: 9px; letter-spacing: 5px; color: var(--col); text-transform: uppercase; margin-bottom: 10px; }
-  .section h2 { font-family: 'Righteous', sans-serif; font-size: clamp(28px, 4vw, 48px); margin-bottom: 28px; }
-  .mat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-  .mat-card { background: var(--panel); border: 1px solid var(--border); padding: 20px 16px; transition: border-color 0.2s; }
-  .mat-card:hover { border-color: var(--col); }
-  .mat-card .ico { font-size: 24px; margin-bottom: 8px; }
-  .mat-card h3 { font-family: 'Righteous', sans-serif; font-size: 16px; margin-bottom: 6px; }
-  .mat-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
-  .mat-card .src { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: 2px; color: var(--green); text-transform: uppercase; }
-  .step { display: grid; grid-template-columns: 60px 1fr; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--border); }
-  .step-num { font-family: 'Righteous', sans-serif; font-size: 48px; color: var(--col); opacity: 0.5; line-height: 1; }
-  .step h3 { font-family: 'Righteous', sans-serif; font-size: 22px; margin-bottom: 10px; }
-  .step p { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 560px; }
-  .tip { margin-top: 12px; padding: 10px 14px; border-left: 3px solid var(--col); background: rgba(0,0,0,0.15); font-size: 11px; color: var(--col); line-height: 1.7; }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-  .tag { font-size: 9px; letter-spacing: 2px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; }
-  .footer { padding: 60px 40px; text-align: center; background: #050805; border-top: 2px solid var(--col); }
-  .footer h2 { font-family: 'Righteous', sans-serif; font-size: clamp(36px, 8vw, 80px); color: var(--col); letter-spacing: 2px; }
-  .footer p { font-size: 11px; color: var(--muted); margin-top: 14px; letter-spacing: 2px; }
-  @media (max-width: 600px) { .hero { padding: 60px 24px 48px; } .wrapper { padding: 0 24px; } .step { grid-template-columns: 44px 1fr; } }
-</style>
-</head>
-<body>
-<section class="hero">
-  <div class="hero-eyebrow">Macher Festival · DIY Tutorial</div>
-  <h1>SCHROTT<em>BANK</em></h1>
-  <p class="hero-desc">Sitzbank aus Paletten und Metallrohren – stabil, wetterbestaendig, komplett aus Restmaterial gebaut.</p>
-  <div class="pill-row">
-    <div class="pill col">Schweissen</div>
-    <div class="pill col">Saegen</div>
-    <div class="pill">~2 Tage</div>
-    <div class="pill">Wertstoffhof Material</div>
-  </div>
+  :root{--col:#e85d04;--deep:#0a0a0a;--panel:#111;--border:#1f1f1f;--muted:#666;--light:#f0ece4;--green:#2ecc71}
+  *{box-sizing:border-box;margin:0;padding:0}body{background:var(--deep);color:var(--light);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+  body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999}
+  .hero{padding:80px 48px 60px;border-bottom:2px solid var(--col);background:radial-gradient(ellipse at 60% 40%,rgba(232,93,4,0.1) 0%,transparent 60%)}
+  .hero-eyebrow{font-size:10px;letter-spacing:5px;color:var(--col);text-transform:uppercase;margin-bottom:24px}
+  .hero h1{font-family:'Righteous',sans-serif;font-size:clamp(60px,12vw,140px);line-height:0.88}
+  .hero h1 em{font-style:normal;color:var(--col);display:block}
+  .hero-desc{margin-top:32px;font-size:12px;line-height:1.9;color:var(--muted);max-width:480px}
+  .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .pill{font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:7px 16px;border:1px solid var(--border);color:var(--muted)}
+  .pill.col{border-color:var(--col);color:var(--col)}
+  .wrapper{max-width:900px;margin:0 auto;padding:0 40px}
+  .section{padding:60px 0;border-bottom:1px solid var(--border)}
+  .section-label{font-size:9px;letter-spacing:5px;color:var(--col);text-transform:uppercase;margin-bottom:10px}
+  .section h2{font-family:'Righteous',sans-serif;font-size:clamp(28px,4vw,48px);margin-bottom:28px}
+  .mat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .mat-card{background:var(--panel);border:1px solid var(--border);padding:20px 16px;transition:border-color .2s,transform .2s}
+  .mat-card:hover{border-color:var(--col);transform:translateY(-2px)}
+  .mat-card .ico{font-size:24px;margin-bottom:8px}
+  .mat-card h3{font-family:'Righteous',sans-serif;font-size:16px;margin-bottom:6px}
+  .mat-card p{font-size:11px;color:var(--muted);line-height:1.7}
+  .mat-card .src{display:inline-block;margin-top:8px;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase}
+  .stat-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:11px}
+  .stat-table th{text-align:left;padding:10px 16px;border-bottom:1px solid var(--col);color:var(--col);font-size:9px;letter-spacing:3px;text-transform:uppercase}
+  .stat-table td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--muted)}
+  .stat-table tr:hover td{background:#141414}
+  .step{display:grid;grid-template-columns:60px 1fr;gap:24px;padding:32px 0;border-bottom:1px solid #181818}
+  .step-num{font-family:'Righteous',sans-serif;font-size:48px;color:var(--col);opacity:.5;line-height:1}
+  .step h3{font-family:'Righteous',sans-serif;font-size:22px;margin-bottom:10px}
+  .step p{font-size:12px;color:var(--muted);line-height:1.9;max-width:560px}
+  .tip{margin-top:12px;padding:10px 14px;border-left:3px solid var(--col);background:rgba(232,93,4,.05);font-size:11px;color:var(--col);line-height:1.7}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .tag{font-size:9px;letter-spacing:2px;padding:4px 10px;border:1px solid var(--border);color:var(--muted);text-transform:uppercase}
+  .safety-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:20px}
+  .safety-card{background:var(--panel);border:1px solid var(--border);padding:18px;display:flex;gap:12px;align-items:flex-start}
+  .safety-card .ico{font-size:20px;flex-shrink:0}
+  .safety-card p{font-size:11px;color:var(--muted);line-height:1.7}
+  .footer{padding:60px 40px;text-align:center;background:#080808;border-top:2px solid var(--col)}
+  .footer h2{font-family:'Righteous',sans-serif;font-size:clamp(36px,8vw,80px);color:var(--col);letter-spacing:2px;line-height:1}
+  .footer p{font-size:11px;color:var(--muted);margin-top:14px;letter-spacing:2px}
+  @media(max-width:600px){.hero{padding:60px 24px 48px}.wrapper{padding:0 24px}.step{grid-template-columns:44px 1fr;gap:14px}}
+</style></head><body>
+<section class="hero"><div class="hero-eyebrow">Macher Festival . DIY Tutorial</div>
+<h1>SCHROTT<em>BANK</em></h1><p class="hero-desc">Sitzbank aus Paletten und Metallrohren - stabil, wetterbestaendig, komplett aus Restmaterial. Fuer drinnen und draussen.</p>
+<div class="pill-row"><div class="pill col">Schweissen</div><div class="pill col">Saegen</div><div class="pill">~2 Tage</div><div class="pill">150cm lang</div><div class="pill">Outdoor</div></div></section>
+<div class="wrapper"><section class="section"><div class="section-label">Material</div><h2>WAS DU BRAUCHST</h2><div class="mat-grid">
+<div class="mat-card"><div class="ico">🪵</div><h3>Palettenholz</h3><p>2-3 Euro-Paletten als Holzmaterial. Bretter abschrauben und wiederverwenden fuer die Sitzflaeche.</p><span class="src">Wertstoffhof / Supermaerkte</span></div>
+<div class="mat-card"><div class="ico">🔩</div><h3>Metallrohr Gestell</h3><p>Vierkantrohr 40x40mm als Beingestell. Ca. 4-5m gesamt fuer eine 150cm Bank.</p><span class="src">Wertstoffhof</span></div>
+<div class="mat-card"><div class="ico">🎨</div><h3>Holzschutzlack</h3><p>Wetterfester Holzlack oder Holzoel fuer die Sitzflaeche. Metallteile: Rostschutz + Decklack.</p><span class="src">Baumarkt</span></div>
+<div class="mat-card"><div class="ico">🪚</div><h3>Werkzeug</h3><p>Schweissgeraet, Saege, Bohrmaschine, Schleifpapier (80+120+240er), Pinsel.</p><span class="src">hast du alles</span></div>
+</div></section>
+<section class="section"><div class="section-label">Statistik</div><h2>MASSE & TRAGKRAFT</h2>
+<table class="stat-table"><thead><tr><th>Parameter</th><th>Mass</th><th>Hinweis</th></tr></thead><tbody>
+<tr><td>Banklaenge</td><td>150-180 cm</td><td>Fuer 2-3 Personen</td></tr>
+<tr><td>Sitzhoehe</td><td>43-48 cm</td><td>Standard Sitzmoebel</td></tr>
+<tr><td>Sitztiefe</td><td>35-45 cm</td><td>Komfortabel sitzen</td></tr>
+<tr><td>Holzdicke Sitzflaeche</td><td>mind. 28 mm</td><td>Palettenholz = 22mm, doppeln!</td></tr>
+<tr><td>Rohrdurchmesser Beine</td><td>40x40mm Vierkant</td><td>mind. 2mm Wandstaerke</td></tr>
+<tr><td>Anzahl Beine</td><td>4 Stueck (oder 2x U-Form)</td><td>Stabiles A oder U-Form</td></tr>
+<tr><td>Tragkraft</td><td>mind. 300 kg gesamt</td><td>Solide schweissen!</td></tr>
+</tbody></table></section>
+<section class="section"><div class="section-label">Bauanleitung</div><h2>SCHRITT FUER SCHRITT</h2>
+<div class="step"><div class="step-num">01</div><div><h3>Gestell schweissen</h3><p>Zwei U-foermige Beinpaare aus Vierkantrohr schweissen. Masse: Breite 40cm, Hoehe 43-48cm (Sitzhoehe). Die zwei Beinpaare mit zwei Laengsrohren verbinden (je 150cm). Alle Ecken verstaerken, alle Naehte doppelt schweissen - eine Bank traegt Menschen!</p><div class="tip">Gestell auf einer ebenen Flaeche schweissen und sofort auf Wackeln testen. Jetzt korrigieren ist einfach, spaeter nach dem Lackieren nicht mehr.</div><div class="tags"><span class="tag">Vierkantrohr</span><span class="tag">Schweissgeraet</span><span class="tag">Wasserwaage</span></div></div></div>
+<div class="step"><div class="step-num">02</div><div><h3>Holz vorbereiten</h3><p>Palettenbretter abschrauben und reinigen. Alle Naegel und Schrauben entfernen. Mit 80er Schleifpapier grob vorschleifen (Schmutz und alte Farbe weg), dann 120er, dann 240er fuer glattes Finish. Splitter und scharfe Kanten muessen komplett weg - Sitzflaeche wird beruehrt und besessen.</p><div class="tip">Doppelte Brettlage verwenden wenn das Einzelbrett duenner als 28mm ist - Sicherheit geht vor.</div><div class="tags"><span class="tag">Saege</span><span class="tag">Schleifpapier 80-240</span></div></div></div>
+<div class="step"><div class="step-num">03</div><div><h3>Holz am Gestell befestigen</h3><p>Bretter mit mind. 4cm Abstand nebeneinander auf das Metallgestell legen. Mit Senkkopfschrauben von oben befestigen - Schraubenkoepfe buergersenken damit sie nicht herausstehen und Kleidung beschaedigen. Bretter muessen fest sitzen und sich nicht verschieben.</p><div class="tip">Holz nicht direkt auf Metall legen - Gummistreifen dazwischen verhindert Quietschen und schuetzt das Holz vor Feuchtigkeit.</div><div class="tags"><span class="tag">Senkkopfschrauben</span><span class="tag">Gummistreifen</span></div></div></div>
+<div class="step"><div class="step-num">04</div><div><h3>Lackieren und fertigstellen</h3><p>Metall: Rostschutzgrundierung, dann schwarzer Decklack. Holz: Holzoel oder wetterfester Klarlack - 2 Schichten. Zwischen Schichten leicht anschleifen (240er). Wetterfesten Lack nehmen wenn die Bank draussen steht. Bank auf einem ebenen Untergrund final testen.</p><div class="tip">Gummifuesse unten an die Beine schrauben - verhindert Kratzer auf dem Boden und macht die Bank leiser wenn jemand drauf sitzt.</div><div class="tags"><span class="tag">Rostschutz</span><span class="tag">Holzoel</span><span class="tag">Gummifuesse</span></div></div></div>
 </section>
-<div class="wrapper">
-<section class="section">
-  <div class="section-label">Material</div>
-  <h2>WAS DU BRAUCHST</h2>
-  <div class="mat-grid">
-    <div class="mat-card"><div class="ico">🔩</div><h3>Hauptmaterial</h3><p>Alles was du brauchst findest du auf dem Wertstoffhof oder hast du bereits zuhause.</p><span class="src">Wertstoffhof</span></div>
-    <div class="mat-card"><div class="ico">🪚</div><h3>Werkzeug</h3><p>Schweissen und Saegen – das Grundwerkzeug das du sowieso hast reicht völlig aus.</p><span class="src">hast du alles</span></div>
-    <div class="mat-card"><div class="ico">🎨</div><h3>Farbe</h3><p>Rostschutzfarbe und Spraylack für das Finish. Für Outdoor-Einsatz wetterfesten Lack verwenden.</p><span class="src">Baumarkt</span></div>
-    <div class="mat-card"><div class="ico">⏱️</div><h3>Zeit</h3><p>~2 Tage realistisch eingeplant. Lieber mehr Zeit lassen – gute Arbeit braucht Ruhe.</p><span class="src">dein Wochenende</span></div>
-  </div>
-</section>
-<section class="section">
-  <div class="section-label">Bauanleitung</div>
-  <h2>SCHRITT FÜR SCHRITT</h2>
-  <div class="step"><div class="step-num">01</div><div><h3>Material sammeln</h3><p>Wertstoffhof abklappern und alles brauchbare einsammeln. Nichts wegschmeißen – manchmal ist das unförmigste Teil das interessanteste. Material säubern und sortieren. Fotos vom Rohmaterial machen – Vorher-Nachher ist super Content!</p><div class="tip">💡 Immer mehr Material holen als du denkst zu brauchen. Reste kannst du für das nächste Projekt nutzen.</div><div class="tags"><span class="tag">Wertstoffhof</span><span class="tag">Sortieren</span></div></div></div>
-  <div class="step"><div class="step-num">02</div><div><h3>Grundstruktur</h3><p>Die tragende Struktur zuerst bauen. Das ist das Fundament. Lieber einmal mehr messen als einmal zu wenig. Stabilität geht vor Schönheit – schön wird es durch das Finish. Trocken zusammenstecken bevor du schweißt oder schraubst.</p><div class="tip">💡 Wenn du schweißt: immer Schutzbrille und Handschuhe. Schweißspritzer sind heiß!</div><div class="tags"><span class="tag">Schweissen</span><span class="tag">Saegen</span></div></div></div>
-  <div class="step"><div class="step-num">03</div><div><h3>Details ausarbeiten</h3><p>Kanten schleifen, Verbindungen verstärken, alles auf Festigkeit testen. Das ist die Phase wo aus einem rohen Konstrukt ein echtes Projekt wird. Alle scharfen Kanten müssen weg – besonders wenn Leute auf dem Festival dran anfassen.</p><div class="tip">💡 Lass jemanden drüberschauen – frische Augen sehen Probleme die du selbst nicht mehr siehst.</div><div class="tags"><span class="tag">Schleifpapier</span><span class="tag">Feile</span><span class="tag">Test</span></div></div></div>
-  <div class="step"><div class="step-num">04</div><div><h3>Lackieren</h3><p>Erst Rostschutzgrundierung, dann Decklack. 2 dünne Schichten sind besser als eine dicke. Für Festival-Einsatz unbedingt wetterfesten Lack – es kann regnen. Schwarzer Matt-Lack mit farbigen Akzenten sieht immer gut aus.</p><div class="tip">💡 Bei Spraylack immer draußen oder mit guter Belüftung arbeiten. Atemschutz nicht vergessen!</div><div class="tags"><span class="tag">Rostschutz</span><span class="tag">Spraylack</span></div></div></div>
-  <div class="step"><div class="step-num">05</div><div><h3>Festival-Ready machen</h3><p>Alles nochmal testen. Schrauben nachziehen. Ersatzteile einpacken. Ein "SPIEL MICH" oder "DREH MICH" Schild anbringen – Leute trauen sich ohne Aufforderung oft nicht. Transportieren: zerlegt ist meist einfacher als komplett.</p><div class="tip">💡 QR-Code zur Website ausdrucken und ans Projekt hängen – so kommen Leute direkt auf deine Tutorials!</div><div class="tags"><span class="tag">Schild</span><span class="tag">QR-Code</span><span class="tag">Ersatzteile</span></div></div></div>
-</section>
-</div>
-<footer class="footer">
-  <h2>MACH ES<br>EINFACH</h2>
-  <p>Macher Festival · Ferropolis · 6.–9. August 2026</p>
-  <p style="margin-top:14px; font-size:11px; letter-spacing:3px; color:var(--col);">von luwymc</p>
-</footer>
-</body>
-</html>
+<section class="section"><div class="section-label">Wichtig</div><h2>SICHERHEIT</h2><div class="safety-grid">
+<div class="safety-card"><div class="ico">🪵</div><p><strong>Holzsplitter:</strong> Sitzflaeche sehr sauber schleifen bis zum 240er. Niemand soll Splitter bekommen.</p></div>
+<div class="safety-card"><div class="ico">🏗️</div><p><strong>Tragkraft:</strong> Alle Schweissnaehte doppelt. Bank muss 300kg tragen - lieber zu stark als zu schwach!</p></div>
+<div class="safety-card"><div class="ico">💧</div><p><strong>Wetter:</strong> Wetterfesten Lack verwenden. Holz quillt bei Naesse und kann Schrauben lockern - regelmaessig nachziehen.</p></div>
+</div></section></div>
+<footer class="footer"><h2>SETZ DICH<br>HIN</h2>
+<p>Macher Festival . Ferropolis . 6.-9. August 2026</p>
+<p style="margin-top:14px;font-size:11px;letter-spacing:3px;color:var(--col);">von luwymc</p>
+</footer></body></html>

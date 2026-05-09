@@ -1,83 +1,84 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RIESENGLOCKE – Bau-Tutorial von luwymc</title>
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riesenglocke - Tutorial von luwymc</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Righteous&family=IBM+Plex+Mono:wght@400;700&display=swap');
-  :root { --col: #ef4444; --deep: #080c0a; --panel: #0d1410; --border: #1a2820; --muted: #4a6050; --light: #e8f4ec; --green: #2ecc71; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--deep); color: var(--light); font-family: 'IBM Plex Mono', monospace; overflow-x: hidden; }
-  .hero { padding: 80px 48px 60px; border-bottom: 2px solid var(--col); background: radial-gradient(ellipse at 60% 40%, rgba(14,165,233,0.08) 0%, transparent 60%); }
-  .hero-eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--col); text-transform: uppercase; margin-bottom: 24px; }
-  .hero h1 { font-family: 'Righteous', sans-serif; font-size: clamp(60px, 12vw, 140px); line-height: 0.88; }
-  .hero h1 em { font-style: normal; color: var(--col); display: block; }
-  .hero-desc { margin-top: 32px; font-size: 12px; line-height: 1.9; color: var(--muted); max-width: 480px; }
-  .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-  .pill { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; padding: 7px 16px; border: 1px solid var(--border); color: var(--muted); }
-  .pill.col { border-color: var(--col); color: var(--col); }
-  .wrapper { max-width: 900px; margin: 0 auto; padding: 0 40px; }
-  .section { padding: 60px 0; border-bottom: 1px solid var(--border); }
-  .section-label { font-size: 9px; letter-spacing: 5px; color: var(--col); text-transform: uppercase; margin-bottom: 10px; }
-  .section h2 { font-family: 'Righteous', sans-serif; font-size: clamp(28px, 4vw, 48px); margin-bottom: 28px; }
-  .mat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-  .mat-card { background: var(--panel); border: 1px solid var(--border); padding: 20px 16px; transition: border-color 0.2s; }
-  .mat-card:hover { border-color: var(--col); }
-  .mat-card .ico { font-size: 24px; margin-bottom: 8px; }
-  .mat-card h3 { font-family: 'Righteous', sans-serif; font-size: 16px; margin-bottom: 6px; }
-  .mat-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
-  .mat-card .src { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: 2px; color: var(--green); text-transform: uppercase; }
-  .step { display: grid; grid-template-columns: 60px 1fr; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--border); }
-  .step-num { font-family: 'Righteous', sans-serif; font-size: 48px; color: var(--col); opacity: 0.5; line-height: 1; }
-  .step h3 { font-family: 'Righteous', sans-serif; font-size: 22px; margin-bottom: 10px; }
-  .step p { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 560px; }
-  .tip { margin-top: 12px; padding: 10px 14px; border-left: 3px solid var(--col); background: rgba(0,0,0,0.15); font-size: 11px; color: var(--col); line-height: 1.7; }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-  .tag { font-size: 9px; letter-spacing: 2px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; }
-  .footer { padding: 60px 40px; text-align: center; background: #050805; border-top: 2px solid var(--col); }
-  .footer h2 { font-family: 'Righteous', sans-serif; font-size: clamp(36px, 8vw, 80px); color: var(--col); letter-spacing: 2px; }
-  .footer p { font-size: 11px; color: var(--muted); margin-top: 14px; letter-spacing: 2px; }
-  @media (max-width: 600px) { .hero { padding: 60px 24px 48px; } .wrapper { padding: 0 24px; } .step { grid-template-columns: 44px 1fr; } }
-</style>
-</head>
-<body>
-<section class="hero">
-  <div class="hero-eyebrow">Macher Festival · DIY Tutorial</div>
-  <h1>RIESEN<em>GLOCKE</em></h1>
-  <p class="hero-desc">Alte Gasflasche als riesiger Klangkoerper – ein Schlag und der Ton hallt 10 Sekunden nach.</p>
-  <div class="pill-row">
-    <div class="pill col">Schweissen</div>
-    <div class="pill col">Flexen</div>
-    <div class="pill">~2 Tage</div>
-    <div class="pill">Wertstoffhof Material</div>
-  </div>
-</section>
-<div class="wrapper">
-<section class="section">
-  <div class="section-label">Material</div>
-  <h2>WAS DU BRAUCHST</h2>
-  <div class="mat-grid">
-    <div class="mat-card"><div class="ico">🔩</div><h3>Hauptmaterial</h3><p>Alles was du brauchst findest du auf dem Wertstoffhof oder hast du bereits zuhause.</p><span class="src">Wertstoffhof</span></div>
-    <div class="mat-card"><div class="ico">🪚</div><h3>Werkzeug</h3><p>Schweissen und Flexen – das Grundwerkzeug das du sowieso hast reicht völlig aus.</p><span class="src">hast du alles</span></div>
-    <div class="mat-card"><div class="ico">🎨</div><h3>Farbe</h3><p>Rostschutzfarbe und Spraylack für das Finish. Für Outdoor-Einsatz wetterfesten Lack verwenden.</p><span class="src">Baumarkt</span></div>
-    <div class="mat-card"><div class="ico">⏱️</div><h3>Zeit</h3><p>~2 Tage realistisch eingeplant. Lieber mehr Zeit lassen – gute Arbeit braucht Ruhe.</p><span class="src">dein Wochenende</span></div>
-  </div>
-</section>
-<section class="section">
-  <div class="section-label">Bauanleitung</div>
-  <h2>SCHRITT FÜR SCHRITT</h2>
-  <div class="step"><div class="step-num">01</div><div><h3>Material sammeln</h3><p>Wertstoffhof abklappern und alles brauchbare einsammeln. Nichts wegschmeißen – manchmal ist das unförmigste Teil das interessanteste. Material säubern und sortieren. Fotos vom Rohmaterial machen – Vorher-Nachher ist super Content!</p><div class="tip">💡 Immer mehr Material holen als du denkst zu brauchen. Reste kannst du für das nächste Projekt nutzen.</div><div class="tags"><span class="tag">Wertstoffhof</span><span class="tag">Sortieren</span></div></div></div>
-  <div class="step"><div class="step-num">02</div><div><h3>Grundstruktur</h3><p>Die tragende Struktur zuerst bauen. Das ist das Fundament. Lieber einmal mehr messen als einmal zu wenig. Stabilität geht vor Schönheit – schön wird es durch das Finish. Trocken zusammenstecken bevor du schweißt oder schraubst.</p><div class="tip">💡 Wenn du schweißt: immer Schutzbrille und Handschuhe. Schweißspritzer sind heiß!</div><div class="tags"><span class="tag">Schweissen</span><span class="tag">Flexen</span></div></div></div>
-  <div class="step"><div class="step-num">03</div><div><h3>Details ausarbeiten</h3><p>Kanten schleifen, Verbindungen verstärken, alles auf Festigkeit testen. Das ist die Phase wo aus einem rohen Konstrukt ein echtes Projekt wird. Alle scharfen Kanten müssen weg – besonders wenn Leute auf dem Festival dran anfassen.</p><div class="tip">💡 Lass jemanden drüberschauen – frische Augen sehen Probleme die du selbst nicht mehr siehst.</div><div class="tags"><span class="tag">Schleifpapier</span><span class="tag">Feile</span><span class="tag">Test</span></div></div></div>
-  <div class="step"><div class="step-num">04</div><div><h3>Lackieren</h3><p>Erst Rostschutzgrundierung, dann Decklack. 2 dünne Schichten sind besser als eine dicke. Für Festival-Einsatz unbedingt wetterfesten Lack – es kann regnen. Schwarzer Matt-Lack mit farbigen Akzenten sieht immer gut aus.</p><div class="tip">💡 Bei Spraylack immer draußen oder mit guter Belüftung arbeiten. Atemschutz nicht vergessen!</div><div class="tags"><span class="tag">Rostschutz</span><span class="tag">Spraylack</span></div></div></div>
-  <div class="step"><div class="step-num">05</div><div><h3>Festival-Ready machen</h3><p>Alles nochmal testen. Schrauben nachziehen. Ersatzteile einpacken. Ein "SPIEL MICH" oder "DREH MICH" Schild anbringen – Leute trauen sich ohne Aufforderung oft nicht. Transportieren: zerlegt ist meist einfacher als komplett.</p><div class="tip">💡 QR-Code zur Website ausdrucken und ans Projekt hängen – so kommen Leute direkt auf deine Tutorials!</div><div class="tags"><span class="tag">Schild</span><span class="tag">QR-Code</span><span class="tag">Ersatzteile</span></div></div></div>
-</section>
-</div>
-<footer class="footer">
-  <h2>MACH ES<br>EINFACH</h2>
-  <p>Macher Festival · Ferropolis · 6.–9. August 2026</p>
-  <p style="margin-top:14px; font-size:11px; letter-spacing:3px; color:var(--col);">von luwymc</p>
-</footer>
-</body>
-</html>
+  :root{--col:#e85d04;--deep:#0a0a0a;--panel:#111;--border:#1f1f1f;--muted:#666;--light:#f0ece4;--green:#2ecc71}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--deep);color:var(--light);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+  body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999}
+  .hero{padding:80px 48px 60px;border-bottom:2px solid var(--col);background:radial-gradient(ellipse at 60% 40%,rgba(232,93,4,0.1) 0%,transparent 60%)}
+  .hero-eyebrow{font-size:10px;letter-spacing:5px;color:var(--col);text-transform:uppercase;margin-bottom:24px}
+  .hero h1{font-family:'Righteous',sans-serif;font-size:clamp(60px,12vw,140px);line-height:0.88}
+  .hero h1 em{font-style:normal;color:var(--col);display:block}
+  .hero-desc{margin-top:32px;font-size:12px;line-height:1.9;color:var(--muted);max-width:480px}
+  .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .pill{font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:7px 16px;border:1px solid var(--border);color:var(--muted)}
+  .pill.col{border-color:var(--col);color:var(--col)}
+  .wrapper{max-width:900px;margin:0 auto;padding:0 40px}
+  .section{padding:60px 0;border-bottom:1px solid var(--border)}
+  .section-label{font-size:9px;letter-spacing:5px;color:var(--col);text-transform:uppercase;margin-bottom:10px}
+  .section h2{font-family:'Righteous',sans-serif;font-size:clamp(28px,4vw,48px);margin-bottom:28px}
+  .mat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .mat-card{background:var(--panel);border:1px solid var(--border);padding:20px 16px;transition:border-color .2s,transform .2s}
+  .mat-card:hover{border-color:var(--col);transform:translateY(-2px)}
+  .mat-card .ico{font-size:24px;margin-bottom:8px}
+  .mat-card h3{font-family:'Righteous',sans-serif;font-size:16px;margin-bottom:6px}
+  .mat-card p{font-size:11px;color:var(--muted);line-height:1.7}
+  .mat-card .src{display:inline-block;margin-top:8px;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase}
+  .stat-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:11px}
+  .stat-table th{text-align:left;padding:10px 16px;border-bottom:1px solid var(--col);color:var(--col);font-size:9px;letter-spacing:3px;text-transform:uppercase}
+  .stat-table td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--muted)}
+  .stat-table tr:hover td{background:#141414}
+  .step{display:grid;grid-template-columns:60px 1fr;gap:24px;padding:32px 0;border-bottom:1px solid #181818}
+  .step-num{font-family:'Righteous',sans-serif;font-size:48px;color:var(--col);opacity:.5;line-height:1}
+  .step h3{font-family:'Righteous',sans-serif;font-size:22px;margin-bottom:10px}
+  .step p{font-size:12px;color:var(--muted);line-height:1.9;max-width:560px}
+  .tip{margin-top:12px;padding:10px 14px;border-left:3px solid var(--col);background:rgba(232,93,4,.05);font-size:11px;color:var(--col);line-height:1.7}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .tag{font-size:9px;letter-spacing:2px;padding:4px 10px;border:1px solid var(--border);color:var(--muted);text-transform:uppercase}
+  .safety-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:20px}
+  .safety-card{background:var(--panel);border:1px solid var(--border);padding:18px;display:flex;gap:12px;align-items:flex-start}
+  .safety-card .ico{font-size:20px;flex-shrink:0}
+  .safety-card p{font-size:11px;color:var(--muted);line-height:1.7}
+  .footer{padding:60px 40px;text-align:center;background:#080808;border-top:2px solid var(--col)}
+  .footer h2{font-family:'Righteous',sans-serif;font-size:clamp(36px,8vw,80px);color:var(--col);letter-spacing:2px;line-height:1}
+  .footer p{font-size:11px;color:var(--muted);margin-top:14px;letter-spacing:2px}
+  @media(max-width:600px){.hero{padding:60px 24px 48px}.wrapper{padding:0 24px}.step{grid-template-columns:44px 1fr;gap:14px}}
+</style></head><body>
+<section class="hero"><div class="hero-eyebrow">Macher Festival . DIY Tutorial</div>
+<h1>RIESEN<em>GLOCKE</em></h1>
+<p class="hero-desc">Alte Gasflasche als riesiger Klangkoerper - ein Schlag und der Ton hallt 10 Sekunden nach. Beeindruckend laut, beeindruckend einfach.</p>
+<div class="pill-row"><div class="pill col">Schweissen</div><div class="pill col">Flexen</div><div class="pill">~2 Tage</div><div class="pill">50cm Durchmesser</div><div class="pill">Sehr laut!</div></div></section>
+<div class="wrapper"><section class="section"><div class="section-label">Material</div><h2>WAS DU BRAUCHST</h2><div class="mat-grid">
+<div class="mat-card"><div class="ico">🔵</div><h3>Gasflasche (leer!)</h3><p>Leere, entleerte Gasflasche 10-33 Liter als Klangkoerper. Je groesser, desto tiefer und lauter der Ton.</p><span class="src">Wertstoffhof / Schrottplaetze</span></div>
+<div class="mat-card"><div class="ico">🔩</div><h3>Haengevorrichtung</h3><p>Starkes Metallrohr oder Kette zum Aufhaengen. Muss mindestens 30kg tragen koennen.</p><span class="src">Wertstoffhof</span></div>
+<div class="mat-card"><div class="ico">🏗️</div><h3>Gestell</h3><p>A-foermiges Gestell aus Vierkantrohr, mindestens 2m hoch damit die Glocke frei schwingen kann.</p><span class="src">Wertstoffhof</span></div>
+<div class="mat-card"><div class="ico">🔨</div><h3>Kloepper</h3><p>Metallstab oder Hammer an einer Kette befestigt. Haerter = lauter, weicher = laengerer Nachhall.</p><span class="src">Wertstoffhof / Baumarkt</span></div>
+</div></section><section class="section"><div class="section-label">Statistik</div><h2>MASSE & KLANG</h2>
+<table class="stat-table"><thead><tr><th>Flaschengrösse</th><th>Gewicht</th><th>Grundton (ca.)</th><th>Nachhalldauer</th></tr></thead><tbody>
+<tr><td>5 Liter</td><td>ca. 4 kg</td><td>sehr hoch</td><td>2-3 Sekunden</td></tr>
+<tr><td>11 Liter</td><td>ca. 7 kg</td><td>hoch</td><td>4-5 Sekunden</td></tr>
+<tr><td>33 Liter</td><td>ca. 15 kg</td><td>mittel</td><td>7-8 Sekunden</td></tr>
+<tr><td>50 Liter</td><td>ca. 25 kg</td><td>tief</td><td>10+ Sekunden</td></tr>
+</tbody></table>
+<table class="stat-table" style="margin-top:24px"><thead><tr><th>Teil</th><th>Mass / Spec</th><th>Hinweis</th></tr></thead><tbody>
+<tr><td>Gestell Hoehe</td><td>mind. 2,0 m</td><td>Glocke muss frei schwingen</td></tr>
+<tr><td>Gestell Breite</td><td>mind. 1,2 m</td><td>Kippsicherheit</td></tr>
+<tr><td>Aufhaengekette</td><td>mind. 8mm stark</td><td>Sicherheit - nie Draht!</td></tr>
+<tr><td>Gestell Rohr</td><td>60x60mm Vierkant</td><td>mind. 3mm Wandstaerke</td></tr>
+<tr><td>Kloeppergewicht</td><td>500g - 2kg</td><td>je schwerer desto lauter</td></tr>
+</tbody></table></section><section class="section"><div class="section-label">Bauanleitung</div><h2>SCHRITT FUER SCHRITT</h2>
+<div class="step"><div class="step-num">01</div><div><h3>Gasflasche vorbereiten</h3><p>WICHTIG: Gasflasche muss vollstaendig entleert und gespuelt sein! Ventil entfernen und Flasche mehrfach mit Wasser spuelen. Erst dann ist sicheres Schweissen moeglich. Flasche auf Schaeden pruefen - keine Risse oder starke Korrosion.</p><div class="tip">NIEMALS an einer Gasflasche schweissen die nicht vollstaendig entleert und gespuelt wurde. Explosionsgefahr!</div><div class="tags"><span class="tag">Sicherheit</span><span class="tag">Entleeren</span><span class="tag">Spuelen</span></div></div></div>
+<div class="step"><div class="step-num">02</div><div><h3>Aufhaengung schweissen</h3><p>Ein stabiles Metalloeser oder eine Oese oben an der Gasflasche anschweissen. Mindestens 3 Schweissnaehte gleichmaessig verteilt. Die Oese muss das 5-fache Gewicht der Glocke tragen koennen - lieber zu stark als zu schwach. Naht abkuehlen lassen und auf Rissse pruefen.</p><div class="tip">Schweissnaht mit Hammer abklopfen nach dem Abkuehlen - hohl klingende Stellen sind schlechte Verbindungen.</div><div class="tags"><span class="tag">Schweissgeraet</span><span class="tag">Schutzbrille</span><span class="tag">Handschuhe</span></div></div></div>
+<div class="step"><div class="step-num">03</div><div><h3>Gestell bauen</h3><p>A-foermiges Gestell aus Vierkantrohr schweissen. Mindestens 2m hoch, 1,2m breit an der Basis. An der Spitze einen Quertraeger fuer die Aufhaengung. Alle Schweissnaehte doppelt ausfahren. Auf ebener Flaeche aufstellen und auf Wackeln pruefen - das Gestell traegt schweres Gewicht.</p><div class="tip">Diagonale Verstrebungen einschweissen - ein A-Bock ohne Streben knickt bei Seitenlast leicht um.</div><div class="tags"><span class="tag">Vierkantrohr</span><span class="tag">Schweissgeraet</span><span class="tag">Flex</span></div></div></div>
+<div class="step"><div class="step-num">04</div><div><h3>Aufhaengen und stimmen</h3><p>Glocke mit Kette (mind. 8mm) am Gestell aufhaengen. Kette so lang waehlen dass die Glocke frei schwingt ohne den Boden zu beruehren. Kloepperstein oder Metallstab an separater Kette befestigen und von der Seite an die Glocke fuehren. Testschlag: sollte 5+ Sekunden nachklingen.</p><div class="tip">Glocke leicht schraeg aufhaengen (10-15 Grad) - dann klingt sie nach dem Schlag gleichmaessiger aus.</div><div class="tags"><span class="tag">Kette 8mm</span><span class="tag">Karabiner</span><span class="tag">Kloeppel</span></div></div></div>
+</section><section class="section"><div class="section-label">Wichtig</div><h2>SICHERHEIT</h2><div class="safety-grid">
+<div class="safety-card"><div class="ico">💥</div><p><strong>Gasflasche:</strong> Nur vollstaendig entleerte und gespuelte Flaschen verwenden. Niemals Reste drin lassen - Explosionsgefahr!</p></div>
+<div class="safety-card"><div class="ico">🔊</div><p><strong>Lautstaerke:</strong> Sehr laut - Ohrschutz bereithalten. Nicht direkt neben dem Ohr schlagen lassen.</p></div>
+<div class="safety-card"><div class="ico">⛓️</div><p><strong>Aufhaengung:</strong> Nur Kette verwenden, kein Draht oder Seil - Glocke schwingt stark und belastet die Aufhaengung enorm.</p></div>
+<div class="safety-card"><div class="ico">🏗️</div><p><strong>Gestell:</strong> Vor Festival nochmals alle Schweissnaehte pruefen. Gestell mit Heringen im Boden sichern bei weichem Untergrund.</p></div>
+</div></section></div>
+<footer class="footer"><h2>LASS ES<br>KLINGEN</h2>
+<p>Macher Festival . Ferropolis . 6.-9. August 2026</p>
+<p style="margin-top:14px;font-size:11px;letter-spacing:3px;color:var(--col);">von luwymc</p>
+</footer></body></html>
