@@ -52,8 +52,14 @@
 </head>
 <body>
 <nav class="top-nav">
-  <a href="index.html" class="nav-home">← HOME</a>
-  <button class="nav-save" onclick="savePage(this)">💾 Seite speichern</button>
+  <a href="index.html" class="nav-home">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </a>
+  <button class="nav-save" onclick="savePage(this)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Tutorial speichern
+  </button>
 </nav>
 <section class="hero">
   <div class="hero-eyebrow">Macher Festival . DIY Tutorial</div>
@@ -104,16 +110,18 @@
   <p style="margin-top:14px; font-size:11px; letter-spacing:3px; color:var(--col);">von luwymc</p>
 </footer>
 
-<div class="visitor-section">
-  <div class="visitor-label">Seitenaufrufe</div>
-  <div class="visitor-count" id="visitCount">...</div>
+<div class="visitor-count" id="visitCount">...</div>
   <div class="visitor-sub">Besuche auf dieser Seite (lokal gezaehlt)</div>
 </div>
 <script>
+// Track this page visit
 const key = "visits_windharfe";
 const visits = parseInt(localStorage.getItem(key) || "0") + 1;
 localStorage.setItem(key, visits);
-document.getElementById("visitCount").textContent = visits.toLocaleString("de-DE");
+// Add to total visit counter
+const totalKey = "visits_total";
+const total = parseInt(localStorage.getItem(totalKey) || "0") + 1;
+localStorage.setItem(totalKey, total);
 
 function savePage(btn) {
   const link = document.createElement("a");

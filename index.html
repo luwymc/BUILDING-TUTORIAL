@@ -485,6 +485,18 @@
   .about-stat-label { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
   .about-stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--orange); }
 
+  .visitor-bar {
+    background: #0d0d0d;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 48px;
+    text-align: center;
+  }
+  .visitor-inner { max-width: 400px; margin: 0 auto; }
+  .visitor-label { font-size: 10px; letter-spacing: 4px; color: var(--orange); text-transform: uppercase; margin-bottom: 16px; }
+  .visitor-count { font-family: 'Bebas Neue', sans-serif; font-size: clamp(72px, 12vw, 120px); color: var(--orange); line-height: 1; }
+  .visitor-sub { font-size: 10px; color: var(--muted); margin-top: 10px; letter-spacing: 2px; }
+
   /* ── FOOTER ── */
   footer {
     border-top: 1px solid var(--border);
@@ -796,12 +808,52 @@
   </div>
 </section>
 
+<!-- VISITOR COUNTER -->
+<div class="visitor-bar">
+  <div class="visitor-inner">
+    <div class="visitor-label">🔥 Gesamte Seitenaufrufe</div>
+    <div class="visitor-count" id="totalVisits">...</div>
+    <div class="visitor-sub">Aufrufe aller Tutorials zusammen</div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">luw<span>y</span>mc</div>
   <p>Macher Festival · Ferropolis · 6.–9. August 2026</p>
   <p>Alle Tutorials kostenlos · Support via Ko-fi</p>
 </footer>
+
+<script>
+// Sum up all tutorial visit counts
+const pages = [
+  'windharfe','roehrentelefon','riesenglocke','feuerkorb',
+  'schrott-skulptur','spiegelwand','lichtturm','riesenschach',
+  'schrottboccia','ringwurf','dosenwerfen','werkzeugwand',
+  'schrottbank','pflanzentopf-tower','fahrradstaender',
+  'schrottschlagzeug','schrottklavier-v2','spinwall',
+  'wunschrad','balance-tisch'
+];
+
+let total = 0;
+pages.forEach(p => {
+  total += parseInt(localStorage.getItem('visits_' + p) || '0');
+});
+// Also count homepage visits
+const homeVisits = parseInt(localStorage.getItem('visits_home') || '0') + 1;
+localStorage.setItem('visits_home', homeVisits);
+total += homeVisits;
+
+// Animate count up
+const el = document.getElementById('totalVisits');
+let current = 0;
+const increment = Math.ceil(total / 40);
+const timer = setInterval(() => {
+  current = Math.min(current + increment, total);
+  el.textContent = current.toLocaleString('de-DE');
+  if (current >= total) clearInterval(timer);
+}, 30);
+</script>
 
 </body>
 </html>
