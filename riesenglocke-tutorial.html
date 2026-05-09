@@ -52,11 +52,25 @@
   .nav-save:hover{opacity:0.85;transform:translateY(-1px)}
   .nav-save.saved{background:#2ecc71;color:#000}
   .hero-padding{padding-top:130px!important}
+
+  .nav-lang{display:inline-flex;border:1px solid #e85d04;overflow:hidden;margin-left:12px}
+  .nav-lang button{background:none;border:none;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;padding:8px 12px;cursor:pointer;color:#666;transition:all .2s}
+  .nav-lang button.active{background:#e85d04;color:#fff}
+  [data-lang]{transition:opacity .15s}
+
+  .yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px}
+  .yt-card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--border);transition:border-color .2s,transform .2s}
+  .yt-card:hover{border-color:var(--col);transform:translateY(-3px)}
+  .yt-thumb{position:relative;aspect-ratio:16/9;overflow:hidden}
+  .yt-thumb img{width:100%;height:100%;object-fit:cover}
+  .yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px;color:white;background:rgba(0,0,0,0.3);opacity:0;transition:opacity .2s}
+  .yt-card:hover .yt-play{opacity:1}
+  .yt-title{padding:12px;font-size:11px;color:var(--muted);line-height:1.5}
 </style></head><body>
 
 <nav class="top-nav">
   <a href="index.html" class="nav-home">← HOME</a>
-  <button class="nav-save" onclick="savePage(this)">&#128190; SEITE SPEICHERN</button>
+  <button class="nav-save" onclick="savePage(this)" data-de="&#128190; SEITE SPEICHERN" data-en="&#128190; SAVE PAGE">&#128190; SEITE SPEICHERN</button>
 </nav>
 <section class="hero" style="padding-top:130px"><div class="hero-eyebrow">Macher Festival . DIY Tutorial</div>
 <h1>RIESEN<em>GLOCKE</em></h1>
@@ -91,6 +105,35 @@
 <div class="safety-card"><div class="ico">⛓️</div><p><strong>Aufhaengung:</strong> Nur Kette verwenden, kein Draht oder Seil - Glocke schwingt stark und belastet die Aufhaengung enorm.</p></div>
 <div class="safety-card"><div class="ico">🏗️</div><p><strong>Gestell:</strong> Vor Festival nochmals alle Schweissnaehte pruefen. Gestell mit Heringen im Boden sichern bei weichem Untergrund.</p></div>
 </div></section></div>
+
+<section class="section">
+  <div class="section-label">Inspiration</div>
+  <h2>ÄHNLICHE VIDEOS</h2>
+  <div class="yt-grid">
+    <a href="https://www.youtube.com/watch?v=Uz1BN-brqKU" target="_blank" class="yt-card">
+      <div class="yt-thumb">
+        <img src="https://img.youtube.com/vi/Uz1BN-brqKU/mqdefault.jpg" alt="DIY Giant Bell from Gas Cylinder" loading="lazy">
+        <div class="yt-play">▶</div>
+      </div>
+      <div class="yt-title">DIY Giant Bell from Gas Cylinder</div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=Es2Jc4JlUHQ" target="_blank" class="yt-card">
+      <div class="yt-thumb">
+        <img src="https://img.youtube.com/vi/Es2Jc4JlUHQ/mqdefault.jpg" alt="Make Your Own Metal Bell" loading="lazy">
+        <div class="yt-play">▶</div>
+      </div>
+      <div class="yt-title">Make Your Own Metal Bell</div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=SfqVR7-5LnA" target="_blank" class="yt-card">
+      <div class="yt-thumb">
+        <img src="https://img.youtube.com/vi/SfqVR7-5LnA/mqdefault.jpg" alt="Homemade Steel Bell Sound Test" loading="lazy">
+        <div class="yt-play">▶</div>
+      </div>
+      <div class="yt-title">Homemade Steel Bell Sound Test</div>
+    </a>
+  </div>
+</section>
+</div>
 <footer class="footer"><h2>LASS ES<br>KLINGEN</h2>
 <p>Macher Festival . Ferropolis . 6.-9. August 2026</p>
 <p style="margin-top:14px;font-size:11px;letter-spacing:3px;color:var(--col);">von luwymc</p>
@@ -123,20 +166,64 @@ function savePage(btn) {
   }, 3000);
 }
 </script>
+
+</body>
+
 <script>
-function savePage(btn) {
-  const link = document.createElement('a');
-  link.href = window.location.href;
-  link.download = 'riesenglocke-tutorial.html';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  btn.textContent = '✅ GESPEICHERT!';
-  btn.classList.add('saved');
-  setTimeout(() => {
-    btn.innerHTML = '&#128190; SEITE SPEICHERN';
-    btn.classList.remove('saved');
-  }, 3000);
+// Language switcher
+const translations = {
+  de: {
+    home: '← HOME',
+    save: '&#128190; SEITE SPEICHERN',
+    saved: '✅ GESPEICHERT!',
+    eyebrow: 'Macher Festival . DIY Tutorial',
+    material: 'Material',
+    material_h: 'WAS DU BRAUCHST',
+    stats: 'Statistik',
+    steps: 'Bauanleitung',
+    steps_h: 'SCHRITT FÜR SCHRITT',
+    safety: 'Nicht vergessen',
+    safety_h: 'SICHERHEIT',
+  },
+  en: {
+    home: '← HOME',
+    save: '&#128190; SAVE PAGE',
+    saved: '✅ SAVED!',
+    eyebrow: 'Macher Festival . DIY Tutorial',
+    material: 'Materials',
+    material_h: 'WHAT YOU NEED',
+    stats: 'Statistics',
+    steps: 'Instructions',
+    steps_h: 'STEP BY STEP',
+    safety: 'Important',
+    safety_h: 'SAFETY',
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'de';
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  
+  // Update buttons
+  document.querySelectorAll('.nav-lang button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  // Update all elements with data-de and data-en
+  document.querySelectorAll('[data-de]').forEach(el => {
+    el.innerHTML = lang === 'de' ? el.dataset.de : (el.dataset.en || el.dataset.de);
+  });
+
+  // Update section labels
+  document.querySelectorAll('.section-label[data-de]').forEach(el => {
+    el.textContent = lang === 'de' ? el.dataset.de : el.dataset.en;
+  });
 }
+
+// Init on load
+document.addEventListener('DOMContentLoaded', () => setLang(currentLang));
 </script>
-</body></html>
+</body>
+</html>

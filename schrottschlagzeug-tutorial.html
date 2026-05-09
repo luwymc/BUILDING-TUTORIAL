@@ -45,13 +45,27 @@
   .nav-save:hover{opacity:0.85;transform:translateY(-1px)}
   .nav-save.saved{background:#2ecc71;color:#000}
   .hero-padding{padding-top:130px!important}
+
+  .nav-lang{display:inline-flex;border:1px solid #e85d04;overflow:hidden;margin-left:12px}
+  .nav-lang button{background:none;border:none;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;padding:8px 12px;cursor:pointer;color:#666;transition:all .2s}
+  .nav-lang button.active{background:#e85d04;color:#fff}
+  [data-lang]{transition:opacity .15s}
+
+  .yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px}
+  .yt-card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--border);transition:border-color .2s,transform .2s}
+  .yt-card:hover{border-color:var(--col);transform:translateY(-3px)}
+  .yt-thumb{position:relative;aspect-ratio:16/9;overflow:hidden}
+  .yt-thumb img{width:100%;height:100%;object-fit:cover}
+  .yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px;color:white;background:rgba(0,0,0,0.3);opacity:0;transition:opacity .2s}
+  .yt-card:hover .yt-play{opacity:1}
+  .yt-title{padding:12px;font-size:11px;color:var(--muted);line-height:1.5}
 </style>
 </head>
 <body>
 
 <nav class="top-nav">
   <a href="index.html" class="nav-home">← HOME</a>
-  <button class="nav-save" onclick="savePage(this)">&#128190; SEITE SPEICHERN</button>
+  <button class="nav-save" onclick="savePage(this)" data-de="&#128190; SEITE SPEICHERN" data-en="&#128190; SAVE PAGE">&#128190; SEITE SPEICHERN</button>
 </nav>
 <section class="hero" style="padding-top:130px">
   <div class="hero-eyebrow">Macher Festival · DIY Tutorial</div>
@@ -80,6 +94,35 @@
   <div class="step"><div class="step-num">02</div><div><h3>Trommeln montieren</h3><p>Töpfe mit Schellen, Schraubzwingen oder Schweißnähten am Gestell befestigen. Verschiedene Höhen und Winkel – so wie ein echtes Drumset aufgebaut ist. Großer Topf als Bass-Drum unten, kleine Töpfe oben.</p><div class="tip">💡 Töpfe nicht festschweißen sondern mit Schellen befestigen – dann kann man sie später umpositionieren.</div></div></div>
   <div class="step"><div class="step-num">03</div><div><h3>Becken & Hi-Hat</h3><p>Große flache Bleche oder Pfannendeckel als Becken. Mit einem biegbaren Arm am Gestell befestigen damit sie schwingen können – das gibt den typischen Beckenklang. Ein Deckel auf einem Stock als Hi-Hat.</p><div class="tip">💡 Je dünner das Blech, desto heller und länger der Klang.</div></div></div>
   <div class="step"><div class="step-num">04</div><div><h3>Feintuning & Test</h3><p>Alles festziehen, dann ausgiebig testen. Klingt etwas zu dumpf? Löcher ins Material bohren – das verändert den Ton. Alles zu laut? Gummipuffer zwischen Befestigung und Topf legen. Dann jemanden draufsetzen und abrocken lassen!</p><div class="tip">💡 Ein Schild "SPIEL MICH!" reicht – niemand kann an einem Schlagzeug vorbeigehen ohne draufzuhauen.</div></div></div>
+</section>
+</div>
+
+<section class="section">
+  <div class="section-label">Inspiration</div>
+  <h2>ÄHNLICHE VIDEOS</h2>
+  <div class="yt-grid">
+    <a href="https://www.youtube.com/watch?v=D1BNZBb-Z8o" target="_blank" class="yt-card">
+      <div class="yt-thumb">
+        <img src="https://img.youtube.com/vi/D1BNZBb-Z8o/mqdefault.jpg" alt="DIY Scrap Metal Drum Kit" loading="lazy">
+        <div class="yt-play">▶</div>
+      </div>
+      <div class="yt-title">DIY Scrap Metal Drum Kit</div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=8s1btCnAY50" target="_blank" class="yt-card">
+      <div class="yt-thumb">
+        <img src="https://img.youtube.com/vi/8s1btCnAY50/mqdefault.jpg" alt="Homemade Percussion Instrument from Scrap" loading="lazy">
+        <div class="yt-play">▶</div>
+      </div>
+      <div class="yt-title">Homemade Percussion Instrument from Scrap</div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=0ESYUQpaKR8" target="_blank" class="yt-card">
+      <div class="yt-thumb">
+        <img src="https://img.youtube.com/vi/0ESYUQpaKR8/mqdefault.jpg" alt="DIY Junk Drum Set" loading="lazy">
+        <div class="yt-play">▶</div>
+      </div>
+      <div class="yt-title">DIY Junk Drum Set</div>
+    </a>
+  </div>
 </section>
 </div>
 <footer class="footer">
@@ -116,21 +159,65 @@ function savePage(btn) {
   }, 3000);
 }
 </script>
+
+</body>
+
+
 <script>
-function savePage(btn) {
-  const link = document.createElement('a');
-  link.href = window.location.href;
-  link.download = 'schrottschlagzeug-tutorial.html';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  btn.textContent = '✅ GESPEICHERT!';
-  btn.classList.add('saved');
-  setTimeout(() => {
-    btn.innerHTML = '&#128190; SEITE SPEICHERN';
-    btn.classList.remove('saved');
-  }, 3000);
+// Language switcher
+const translations = {
+  de: {
+    home: '← HOME',
+    save: '&#128190; SEITE SPEICHERN',
+    saved: '✅ GESPEICHERT!',
+    eyebrow: 'Macher Festival . DIY Tutorial',
+    material: 'Material',
+    material_h: 'WAS DU BRAUCHST',
+    stats: 'Statistik',
+    steps: 'Bauanleitung',
+    steps_h: 'SCHRITT FÜR SCHRITT',
+    safety: 'Nicht vergessen',
+    safety_h: 'SICHERHEIT',
+  },
+  en: {
+    home: '← HOME',
+    save: '&#128190; SAVE PAGE',
+    saved: '✅ SAVED!',
+    eyebrow: 'Macher Festival . DIY Tutorial',
+    material: 'Materials',
+    material_h: 'WHAT YOU NEED',
+    stats: 'Statistics',
+    steps: 'Instructions',
+    steps_h: 'STEP BY STEP',
+    safety: 'Important',
+    safety_h: 'SAFETY',
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'de';
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  
+  // Update buttons
+  document.querySelectorAll('.nav-lang button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  // Update all elements with data-de and data-en
+  document.querySelectorAll('[data-de]').forEach(el => {
+    el.innerHTML = lang === 'de' ? el.dataset.de : (el.dataset.en || el.dataset.de);
+  });
+
+  // Update section labels
+  document.querySelectorAll('.section-label[data-de]').forEach(el => {
+    el.textContent = lang === 'de' ? el.dataset.de : el.dataset.en;
+  });
 }
+
+// Init on load
+document.addEventListener('DOMContentLoaded', () => setLang(currentLang));
 </script>
 </body>
 </html>
