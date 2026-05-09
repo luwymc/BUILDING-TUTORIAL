@@ -51,6 +51,10 @@
 </style>
 </head>
 <body>
+<nav class="top-nav">
+  <a href="index.html" class="nav-home">← HOME</a>
+  <button class="nav-save" onclick="savePage(this)">💾 Seite speichern</button>
+</nav>
 <section class="hero">
   <div class="hero-eyebrow">Macher Festival . DIY Tutorial</div>
   <h1>WIND<em>HARFE</em></h1>
@@ -99,5 +103,32 @@
   <p>Macher Festival . Ferropolis . 6.-9. August 2026</p>
   <p style="margin-top:14px; font-size:11px; letter-spacing:3px; color:var(--col);">von luwymc</p>
 </footer>
+
+<div class="visitor-section">
+  <div class="visitor-label">Seitenaufrufe</div>
+  <div class="visitor-count" id="visitCount">...</div>
+  <div class="visitor-sub">Besuche auf dieser Seite (lokal gezaehlt)</div>
+</div>
+<script>
+const key = "visits_windharfe";
+const visits = parseInt(localStorage.getItem(key) || "0") + 1;
+localStorage.setItem(key, visits);
+document.getElementById("visitCount").textContent = visits.toLocaleString("de-DE");
+
+function savePage(btn) {
+  const link = document.createElement("a");
+  link.href = window.location.href;
+  link.download = "windharfe-tutorial.html";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  btn.textContent = "✅ Gespeichert!";
+  btn.classList.add("saved");
+  setTimeout(() => {
+    btn.textContent = "💾 Seite speichern";
+    btn.classList.remove("saved");
+  }, 3000);
+}
+</script>
 </body>
 </html>
