@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schrottklavier – Bau-Tutorial von luwymc</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Righteous&family=IBM+Plex+Mono:wght@400;700&display=swap');
+
+  :root {
+    --gold: #d4a017;
+    --deep: #0a0a0a;
+    --panel: #161616;
+    --border: #252525;
+    --muted: #666;
+    --light: #e8e8e8;
+    --green: #2ecc71;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--deep);
+    color: var(--light);
+    font-family: 'IBM Plex Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .hero {
+    padding: 80px 48px 60px;
+    border-bottom: 2px solid var(--gold);
+    background: radial-gradient(ellipse at 20% 60%, rgba(212,160,23,0.08) 0%, transparent 55%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Righteous', sans-serif;
+    font-size: clamp(72px, 14vw, 160px);
+    line-height: 0.88;
+    color: var(--light);
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-desc {
+    margin-top: 32px;
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 480px;
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .pill {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .pill.gold {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .staff-deco {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.06;
+    width: 300px;
+  }
+
+  .pipes-diagram {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 48px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .pipes-diagram svg {
+    width: 100%;
+    max-width: 700px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .section {
+    padding: 72px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: 'Righteous', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+    line-height: 1;
+  }
+
+  .mat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .mat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 22px 18px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .mat-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .mat-card .ico { font-size: 26px; margin-bottom: 10px; }
+  .mat-card h3 { font-family: 'Righteous', sans-serif; font-size: 18px; margin-bottom: 6px; color: var(--light); }
+  .mat-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
+  .mat-card .src { display: inline-block; margin-top: 10px; font-size: 9px; letter-spacing: 2px; color: var(--green); text-transform: uppercase; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 28px;
+    padding: 40px 0;
+    border-bottom: 1px solid #181818;
+  }
+
+  .step-num {
+    font-family: 'Righteous', sans-serif;
+    font-size: 56px;
+    color: var(--gold);
+    opacity: 0.5;
+    line-height: 1;
+  }
+
+  .step h3 { font-family: 'Righteous', sans-serif; font-size: 26px; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .step p { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 560px; }
+
+  .tip {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-left: 3px solid var(--gold);
+    background: rgba(212,160,23,0.04);
+    font-size: 11px;
+    color: var(--gold);
+    line-height: 1.7;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .tag { font-size: 9px; letter-spacing: 2px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; }
+
+  .note-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 11px; }
+  .note-table th { text-align: left; padding: 10px 16px; border-bottom: 1px solid var(--gold); color: var(--gold); font-size: 9px; letter-spacing: 3px; text-transform: uppercase; }
+  .note-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: middle; }
+  .note-table tr:hover td { background: #141414; }
+  .note-bar { display: inline-block; height: 10px; background: var(--gold); border-radius: 2px; opacity: 0.7; }
+
+  .safety-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 20px; }
+  .safety-card { background: var(--panel); border: 1px solid var(--border); padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
+  .safety-card .ico { font-size: 22px; flex-shrink: 0; }
+  .safety-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
+
+  .footer {
+    padding: 80px 40px;
+    text-align: center;
+    background: #080808;
+    border-top: 2px solid var(--gold);
+  }
+
+  .footer h2 {
+    font-family: 'Righteous', sans-serif;
+    font-size: clamp(40px, 9vw, 100px);
+    color: var(--gold);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .footer p { font-size: 11px; color: var(--muted); margin-top: 16px; letter-spacing: 2px; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 60px 24px 48px; }
+    .wrapper { padding: 0 24px; }
+    .step { grid-template-columns: 48px 1fr; gap: 14px; }
+    .step-num { font-size: 40px; }
+    .staff-deco { display: none; }
+    .pipes-diagram { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-eyebrow">Macher Festival Projekt · DIY Tutorial</div>
+  <h1>SCHROTT<em>KLAVIER</em></h1>
+  <p class="hero-desc">Ein Schlagwerk-Instrument aus alten Metallrohren, Blechen und Schrott – jeder kann drauf spielen, kein Musikwissen nötig. Das lauteste und interaktivste Ding auf dem Festival.</p>
+  <div class="pill-row">
+    <div class="pill gold">Sägen</div>
+    <div class="pill gold">Flexen</div>
+    <div class="pill">~1 Woche Bauzeit</div>
+    <div class="pill">1–1,5m breit</div>
+    <div class="pill">Kein Schweißen nötig</div>
+  </div>
+  <svg class="staff-deco" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="40" x2="300" y2="40" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="70" x2="300" y2="70" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="100" x2="300" y2="100" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="130" x2="300" y2="130" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="160" x2="300" y2="160" stroke="white" stroke-width="2"/>
+    <ellipse cx="60" cy="160" rx="12" ry="9" fill="white"/>
+    <line x1="72" y1="160" x2="72" y2="100" stroke="white" stroke-width="2"/>
+    <ellipse cx="110" cy="130" rx="12" ry="9" fill="white"/>
+    <line x1="122" y1="130" x2="122" y2="70" stroke="white" stroke-width="2"/>
+    <ellipse cx="160" cy="100" rx="12" ry="9" fill="white"/>
+    <line x1="172" y1="100" x2="172" y2="40" stroke="white" stroke-width="2"/>
+    <ellipse cx="210" cy="70" rx="12" ry="9" fill="white"/>
+    <line x1="222" y1="70" x2="222" y2="10" stroke="white" stroke-width="2"/>
+    <ellipse cx="260" cy="40" rx="12" ry="9" fill="white"/>
+  </svg>
+</section>
+
+<div class="pipes-diagram">
+  <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="30" width="660" height="18" rx="4" fill="#2a2a2a"/>
+    <line x1="80" y1="48" x2="80" y2="80" stroke="#555" stroke-width="2"/>
+    <line x1="155" y1="48" x2="155" y2="80" stroke="#555" stroke-width="2"/>
+    <line x1="230" y1="48" x2="230" y2="80" stroke="#555" stroke-width="2"/>
+    <line x1="305" y1="48" x2="305" y2="80" stroke="#555" stroke-width="2"/>
+    <line x1="380" y1="48" x2="380" y2="80" stroke="#555" stroke-width="2"/>
+    <line x1="455" y1="48" x2="455" y2="80" stroke="#555" stroke-width="2"/>
+    <line x1="530" y1="48" x2="530" y2="80" stroke="#555" stroke-width="2"/>
+    <line x1="605" y1="48" x2="605" y2="80" stroke="#555" stroke-width="2"/>
+    <rect x="60" y="80" width="40" height="170" rx="3" fill="#d4a017"/>
+    <text x="80" y="265" text-anchor="middle" fill="#d4a017" font-family="monospace" font-size="11" font-weight="bold">DO</text>
+    <text x="80" y="74" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">100cm</text>
+    <rect x="135" y="96" width="40" height="154" rx="3" fill="#c0392b"/>
+    <text x="155" y="265" text-anchor="middle" fill="#c0392b" font-family="monospace" font-size="11" font-weight="bold">RE</text>
+    <text x="155" y="90" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">90cm</text>
+    <rect x="210" y="110" width="40" height="140" rx="3" fill="#2980b9"/>
+    <text x="230" y="265" text-anchor="middle" fill="#2980b9" font-family="monospace" font-size="11" font-weight="bold">MI</text>
+    <text x="230" y="104" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">82cm</text>
+    <rect x="285" y="122" width="40" height="128" rx="3" fill="#27ae60"/>
+    <text x="305" y="265" text-anchor="middle" fill="#27ae60" font-family="monospace" font-size="11" font-weight="bold">FA</text>
+    <text x="305" y="116" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">75cm</text>
+    <rect x="360" y="136" width="40" height="114" rx="3" fill="#8e44ad"/>
+    <text x="380" y="265" text-anchor="middle" fill="#8e44ad" font-family="monospace" font-size="11" font-weight="bold">SOL</text>
+    <text x="380" y="130" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">67cm</text>
+    <rect x="435" y="148" width="40" height="102" rx="3" fill="#e67e22"/>
+    <text x="455" y="265" text-anchor="middle" fill="#e67e22" font-family="monospace" font-size="11" font-weight="bold">LA</text>
+    <text x="455" y="142" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">60cm</text>
+    <rect x="510" y="160" width="40" height="90" rx="3" fill="#16a085"/>
+    <text x="530" y="265" text-anchor="middle" fill="#16a085" font-family="monospace" font-size="11" font-weight="bold">SI</text>
+    <text x="530" y="154" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">53cm</text>
+    <rect x="585" y="172" width="40" height="78" rx="3" fill="#d4a017"/>
+    <text x="605" y="265" text-anchor="middle" fill="#d4a017" font-family="monospace" font-size="11" font-weight="bold">DO</text>
+    <text x="605" y="166" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">46cm</text>
+    <line x1="30" y1="200" x2="58" y2="180" stroke="#555" stroke-width="3"/>
+    <circle cx="28" cy="202" r="10" fill="#333" stroke="#555" stroke-width="2"/>
+    <text x="28" y="230" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">Schlegel</text>
+  </svg>
+</div>
+
+<div class="wrapper">
+
+<section class="section">
+  <div class="section-label">Was du brauchst</div>
+  <h2>MATERIAL & WERKZEUG</h2>
+  <div class="mat-grid">
+    <div class="mat-card">
+      <div class="ico">🔩</div>
+      <h3>Metallrohre</h3>
+      <p>Stahlrohr oder Kupferrohr, Durchmesser 2–4cm. Je dicker das Rohr, desto tiefer der Ton. Ca. 8 Stück in verschiedenen Längen (46–100cm).</p>
+      <span class="src">→ Wertstoffhof / Schrottplatz</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🪵</div>
+      <h3>Trägerrahmen</h3>
+      <p>Zwei A-Böcke aus Holz (wie ein Wäscheständer) oder ein Metallgestell, von dem die Rohre hängen. Ca. 1,2m hoch.</p>
+      <span class="src">→ Wertstoffhof / Holzreste</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🪢</div>
+      <h3>Schnur / Draht</h3>
+      <p>Zum Aufhängen der Rohre. Nylonschnur oder dünner Stahldraht. Wichtig: Die Rohre müssen frei schwingen können!</p>
+      <span class="src">→ Baumarkt</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🔨</div>
+      <h3>Schlegel / Klöppel</h3>
+      <p>2–3 Stück. Holzstab mit einem Ende aus Hartgummi, Leder oder Holzkugel. Verschiedene Materialien = verschiedene Klänge.</p>
+      <span class="src">→ Selber bauen / Baumarkt</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🪚</div>
+      <h3>Werkzeug</h3>
+      <p>Flex oder Metallsäge zum Kürzen der Rohre. Bohrmaschine für Aufhängelöcher. Schleifpapier für Kanten.</p>
+      <span class="src">→ hast du alles</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🎨</div>
+      <h3>Optional: Farbe</h3>
+      <p>Rohre bunt lackieren – jede Note eine Farbe. Macht es für Kinder noch intuitiver und sieht auf dem Festival mega aus.</p>
+      <span class="src">→ Baumarkt (Spraylack)</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Die Töne</div>
+  <h2>ROHRLÄNGEN FÜR DIE TONLEITER</h2>
+  <p style="font-size:12px; color:var(--muted); line-height:1.8;">Das gilt für <strong style="color:var(--light)">Stahlrohr mit ~2,5cm Durchmesser</strong>. Bei anderen Materialien weichen die Längen leicht ab – einfach testen und bei Bedarf kürzen (kürzer = höher).</p>
+  <table class="note-table">
+    <thead>
+      <tr>
+        <th>Note</th><th>Länge</th><th>Relative Länge</th><th>Farbe (optional)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>DO (C)</td><td>~100 cm</td><td><span class="note-bar" style="width:100px"></span></td><td style="color:#d4a017">● Gelb</td></tr>
+      <tr><td>RE (D)</td><td>~90 cm</td><td><span class="note-bar" style="width:90px"></span></td><td style="color:#c0392b">● Rot</td></tr>
+      <tr><td>MI (E)</td><td>~82 cm</td><td><span class="note-bar" style="width:82px"></span></td><td style="color:#2980b9">● Blau</td></tr>
+      <tr><td>FA (F)</td><td>~75 cm</td><td><span class="note-bar" style="width:75px"></span></td><td style="color:#27ae60">● Grün</td></tr>
+      <tr><td>SOL (G)</td><td>~67 cm</td><td><span class="note-bar" style="width:67px"></span></td><td style="color:#8e44ad">● Lila</td></tr>
+      <tr><td>LA (A)</td><td>~60 cm</td><td><span class="note-bar" style="width:60px"></span></td><td style="color:#e67e22">● Orange</td></tr>
+      <tr><td>SI (B)</td><td>~53 cm</td><td><span class="note-bar" style="width:53px"></span></td><td style="color:#16a085">● Türkis</td></tr>
+      <tr><td>DO (C²)</td><td>~46 cm</td><td><span class="note-bar" style="width:46px"></span></td><td style="color:#d4a017">● Gelb</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <div class="section-label">Schritt für Schritt</div>
+  <h2>BAUANLEITUNG</h2>
+
+  <div class="step">
+    <div class="step-num">01</div>
+    <div>
+      <h3>Rahmen bauen</h3>
+      <p>Bau zwei A-Böcke aus Kanthölzern (wie ein Wäscheständer, nur stabiler) und verbinde sie oben mit einer langen Querstange – das ist der Balken von dem alles hängt. Die Querstange sollte ca. 1,2–1,5m lang sein. Alternativ: Ein H-förmiges Gestell aus Metallrohr zusammenschweißen oder -schrauben.</p>
+      <div class="tip">💡 Tipp: Der Rahmen muss nicht perfekt aussehen – Schrottoptik ist hier das Ziel. Roh belassenes Holz oder rostiges Metall wirkt auf dem Festival authentischer als glatt gehobelt.</div>
+      <div class="tags"><span class="tag">Säge</span><span class="tag">Bohrmaschine</span><span class="tag">Schrauben</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">02</div>
+    <div>
+      <h3>Rohre zuschneiden</h3>
+      <p>Schneide die Metallrohre auf die Längen aus der Tabelle oben zu. Mit der Flex oder einer Metallsäge. Danach alle Schnittkanten sorgfältig abschleifen oder entgraten – sonst schneidet sich jemand beim Spielen. Bohre ca. 2cm vom oberen Ende ein Loch (ca. 4mm Durchmesser) durch das Rohr – hier kommt die Aufhängeschnur durch.</p>
+      <div class="tip">⚠️ Wichtig: Immer zuerst länger lassen und dann kürzen! Kürzer = höherer Ton. Du kannst nichts zurücknehmen aber immer noch kürzen.</div>
+      <div class="tags"><span class="tag">Flex</span><span class="tag">Metallsäge</span><span class="tag">Bohrmaschine</span><span class="tag">Schleifpapier</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">03</div>
+    <div>
+      <h3>Töne testen & stimmen</h3>
+      <p>Bevor du alles aufhängst: Rohr einfach in der Luft halten und mit einem Hammer draufschlagen. Klingt es zu tief? Kürz es um 1–2cm. Klingt es zu hoch? Neues Rohr nehmen. Du brauchst keine perfekte Stimmung – grob richtig reicht völlig. Die "falsch" gestimmten Töne klingen auf einem Festival sowieso interessanter.</p>
+      <div class="tip">💡 Kein Stimmgerät? Stimm-Apps auf dem Handy funktionieren einwandfrei (z.B. "GuitarTuna" – kostenlos).</div>
+      <div class="tags"><span class="tag">Hammer</span><span class="tag">Stimm-App</span><span class="tag">Geduld</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">04</div>
+    <div>
+      <h3>Lackieren (optional aber empfohlen)</h3>
+      <p>Jetzt Rohre bunt lackieren – jede Note eine Farbe wie in der Tabelle. Das macht das Instrument intuitiver (Kinder spielen sofort drauf) und sieht auf dem Festival krass aus. Spraylack trocknet schnell, 2 Schichten reichen. Lass die Farbe komplett trocknen bevor du aufhängst.</p>
+      <div class="tip">💡 Alternativ: Alle Rohre schwarz lackieren und nur die Beschriftung in Gold – sieht edler aus und wirkt mehr wie ein echtes Instrument.</div>
+      <div class="tags"><span class="tag">Spraylack</span><span class="tag">Schutzhandschuhe</span><span class="tag">Zeitung als Unterlage</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">05</div>
+    <div>
+      <h3>Aufhängen</h3>
+      <p>Schnur oder Draht durch das Loch am oberen Ende jedes Rohrs fädeln und einen Knoten machen. Das Rohr muss frei schwingen können – also nicht zu stramm ziehen. Die Rohre in aufsteigender Reihenfolge links nach rechts aufhängen (längste links = tiefste Note). Abstände zwischen den Rohren: ca. 10–15cm damit sie sich nicht berühren.</p>
+      <div class="tip">💡 Das Rohr hängt am besten wenn es ca. 1/5 vom oberen Ende aufgehängt wird – da ist der sogenannte "Knotenpunkt" der die Schwingung nicht dämpft.</div>
+      <div class="tags"><span class="tag">Schnur / Draht</span><span class="tag">Zange</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">06</div>
+    <div>
+      <h3>Schlegel bauen</h3>
+      <p>Nimm einen Holzstab (~30cm lang, 2cm Durchmesser). Am Schlagende befestigst du eine Kugel oder Kappe: Hartgummi (vom alten Fahrradgriff), Lederball, oder einfach eine große Holzkugel aus dem Baumarkt. Mit Draht oder Schrauben befestigen. Mach 2–3 Schlegel – verschiedene Materialien klingen unterschiedlich!</p>
+      <div class="tip">💡 Harte Schlegel (Holz) = heller, metallischer Klang. Weiche Schlegel (Gummi, Leder) = dumpfer, wärmerer Klang. Beides mitnehmen!</div>
+      <div class="tags"><span class="tag">Holzstab</span><span class="tag">Gummi / Leder / Holz</span><span class="tag">Schrauben oder Draht</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">07</div>
+    <div>
+      <h3>Schild & Finishing</h3>
+      <p>Beschrifte die Rohre mit den Notennamen (DO RE MI...) oder Nummern. Hänge ein kleines Schild ans Gestell: "SPIEL MICH!" Das ist wichtiger als du denkst – viele Leute trauen sich nicht ohne Aufforderung. Pack die Schlegel mit einer kleinen Kordel ans Gestell damit sie nicht verloren gehen.</p>
+      <div class="tip">💡 Bonus: Schreib eine einfache Melodie auf ein Schild daneben – z.B. Nummern für "Alle meine Entchen" (1 2 3 4 5 5...). Dann spielen sofort alle!</div>
+      <div class="tags"><span class="tag">Permanentmarker</span><span class="tag">Schild</span><span class="tag">Kordel</span></div>
+    </div>
+  </div>
+
+</section>
+
+<section class="section">
+  <div class="section-label">Nicht vergessen</div>
+  <h2>SICHERHEIT</h2>
+  <div class="safety-grid">
+    <div class="safety-card">
+      <div class="ico">✂️</div>
+      <p><strong>Kanten entgraten:</strong> Alle Schnittkanten der Rohre müssen glatt geschliffen sein. Metallkanten können wie Klingen sein – besonders bei Kindern gefährlich.</p>
+    </div>
+    <div class="safety-card">
+      <div class="ico">🏗️</div>
+      <p><strong>Standfestigkeit:</strong> Das Gestell muss absolut kippsicher sein. Bei Wind und bei mehreren Leuten die gleichzeitig drauf einhauen. Füße breit aufstellen oder Gestell festzurren.</p>
+    </div>
+    <div class="safety-card">
+      <div class="ico">🔊</div>
+      <p><strong>Lautstärke:</strong> Metallrohre können SEHR laut sein. Kein Problem auf einem Festival, aber beim Testen zuhause – Nachbarn warnen!</p>
+    </div>
+    <div class="safety-card">
+      <div class="ico">🥽</div>
+      <p><strong>Beim Bauen:</strong> Schutzbrille beim Flexen und Schleifen. Metallspäne in den Augen sind kein Spaß.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <h2>MACH MUSIK<br>AUS SCHROTT</h2>
+  <p>Macher Festival · Ferropolis · 6.–9. August 2026</p>
+  <p style="margin-top:16px; font-size:11px; letter-spacing:3px; color:var(--gold);">von luwymc</p>
+</footer>
+
+</body>
+</html>

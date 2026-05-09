@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spin Wall – Bau-Tutorial</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --rust: #c0392b;
+    --steel: #2c3e50;
+    --iron: #1a1a1a;
+    --spark: #f39c12;
+    --light: #ecf0f1;
+    --mid: #95a5a6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--iron);
+    color: var(--light);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    border-bottom: 3px solid var(--rust);
+    background:
+      radial-gradient(ellipse at 80% 50%, rgba(192,57,43,0.15) 0%, transparent 60%),
+      var(--iron);
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 15vw, 180px);
+    line-height: 0.9;
+    color: var(--light);
+    letter-spacing: 2px;
+  }
+
+  .hero h1 span {
+    color: var(--rust);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 30px;
+    font-size: 13px;
+    color: var(--mid);
+    max-width: 500px;
+    line-height: 1.8;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    border: 1px solid var(--rust);
+    color: var(--rust);
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    text-transform: uppercase;
+  }
+
+  .badge.filled {
+    background: var(--rust);
+    color: white;
+  }
+
+  /* Spinning wheel decoration */
+  .wheel-deco {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    height: 400px;
+    opacity: 0.07;
+    animation: spin 20s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: translateY(-50%) rotate(360deg); }
+  }
+
+  /* SECTION */
+  .section {
+    padding: 80px 40px;
+    border-bottom: 1px solid #2a2a2a;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 64px);
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    line-height: 1;
+  }
+
+  /* MATERIAL LIST */
+  .material-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .material-card {
+    border: 1px solid #2e2e2e;
+    padding: 20px;
+    position: relative;
+    background: #111;
+    transition: border-color 0.2s;
+  }
+
+  .material-card:hover {
+    border-color: var(--rust);
+  }
+
+  .material-card .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .material-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: var(--light);
+  }
+
+  .material-card p {
+    font-size: 11px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  .material-card .source {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--spark);
+    text-transform: uppercase;
+  }
+
+  /* STEPS */
+  .steps {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 30px;
+    padding: 40px 0;
+    border-bottom: 1px solid #1e1e1e;
+    position: relative;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--rust);
+    line-height: 1;
+    opacity: 0.6;
+  }
+
+  .step-content h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    color: var(--light);
+  }
+
+  .step-content p {
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--mid);
+    max-width: 560px;
+  }
+
+  .step-tip {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-left: 3px solid var(--spark);
+    background: rgba(243,156,18,0.05);
+    font-size: 11px;
+    color: var(--spark);
+    line-height: 1.7;
+  }
+
+  .step-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .tool-tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border: 1px solid #333;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+
+  /* DIAGRAM */
+  .diagram-box {
+    background: #0d0d0d;
+    border: 1px solid #2a2a2a;
+    padding: 40px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .diagram-box svg {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  /* SAFETY */
+  .safety-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .safety-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    background: #0f0f0f;
+    border: 1px solid #222;
+  }
+
+  .safety-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .safety-item p {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 60px 40px;
+    text-align: center;
+    background: #0d0d0d;
+  }
+
+  .footer h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 8vw, 80px);
+    color: var(--rust);
+    letter-spacing: 2px;
+  }
+
+  .footer p {
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 60px 24px; }
+    .section { padding: 60px 24px; }
+    .step { grid-template-columns: 50px 1fr; gap: 16px; }
+    .step-number { font-size: 44px; }
+    .wheel-deco { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Macher Festival Projekt · DIY Tutorial</div>
+  <h1>SPIN<span>WALL</span></h1>
+  <p class="hero-sub">Eine kinetische Skulptur aus Fahrradteilen – komplett aus Schrott gebaut, interaktiv, transportierbar und ein echter Blickfang auf dem Festival.</p>
+  <div class="hero-badges">
+    <div class="badge filled">Schweißen</div>
+    <div class="badge">Flexen</div>
+    <div class="badge">Sägen</div>
+    <div class="badge">~2–3 Wochen Bauzeit</div>
+    <div class="badge">1–2m groß</div>
+  </div>
+
+  <!-- Decorative spinning wheel SVG -->
+  <svg class="wheel-deco" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="95" stroke="white" stroke-width="2" fill="none"/>
+    <circle cx="100" cy="100" r="10" fill="white"/>
+    <line x1="100" y1="10" x2="100" y2="190" stroke="white" stroke-width="1.5"/>
+    <line x1="10" y1="100" x2="190" y2="100" stroke="white" stroke-width="1.5"/>
+    <line x1="27" y1="27" x2="173" y2="173" stroke="white" stroke-width="1.5"/>
+    <line x1="173" y1="27" x2="27" y2="173" stroke="white" stroke-width="1.5"/>
+    <line x1="100" y1="10" x2="173" y2="60" stroke="white" stroke-width="1"/>
+    <line x1="173" y1="60" x2="173" y2="140" stroke="white" stroke-width="1"/>
+    <line x1="173" y1="140" x2="100" y2="190" stroke="white" stroke-width="1"/>
+    <line x1="100" y1="190" x2="27" y2="140" stroke="white" stroke-width="1"/>
+    <line x1="27" y1="140" x2="27" y2="60" stroke="white" stroke-width="1"/>
+    <line x1="27" y1="60" x2="100" y2="10" stroke="white" stroke-width="1"/>
+    <circle cx="100" cy="10" r="5" fill="white"/>
+    <circle cx="190" cy="100" r="5" fill="white"/>
+    <circle cx="100" cy="190" r="5" fill="white"/>
+    <circle cx="10" cy="100" r="5" fill="white"/>
+    <circle cx="173" cy="27" r="4" fill="white"/>
+    <circle cx="173" cy="173" r="4" fill="white"/>
+    <circle cx="27" cy="173" r="4" fill="white"/>
+    <circle cx="27" cy="27" r="4" fill="white"/>
+  </svg>
+</section>
+
+<!-- MATERIAL -->
+<div style="max-width:900px; margin:0 auto;">
+<section class="section">
+  <div class="section-label">Was du brauchst</div>
+  <h2>MATERIAL & WERKZEUG</h2>
+
+  <div class="material-grid">
+    <div class="material-card">
+      <div class="icon">🚲</div>
+      <h3>Fahrradräder</h3>
+      <p>3–5 Stück, verschiedene Größen. Speichen müssen intakt sein, Felgen dürfen verbogen sein.</p>
+      <span class="source">→ Wertstoffhof</span>
+    </div>
+    <div class="material-card">
+      <div class="icon">🔩</div>
+      <h3>Metallrohr / Rundstahl</h3>
+      <p>Als Achsen für die Räder. Durchmesser passend zur Fahrradnabe (ca. 9–15mm). Ca. 2m Gesamtlänge.</p>
+      <span class="source">→ Wertstoffhof / Baumarkt</span>
+    </div>
+    <div class="material-card">
+      <div class="icon">🪵</div>
+      <h3>Holzrahmen oder Metallrahmen</h3>
+      <p>Als Rückwand / Trägerstruktur. Holz: 80×40mm Kanthölzer. Oder Eisenrohr geschweißt.</p>
+      <span class="source">→ Wertstoffhof</span>
+    </div>
+    <div class="material-card">
+      <div class="icon">⛓️</div>
+      <h3>Fahrradketten</h3>
+      <p>Für die Verbindung zwischen den Rädern – damit drehen sich alle zusammen wenn man eines bewegt.</p>
+      <span class="source">→ Wertstoffhof / alte Fahrräder</span>
+    </div>
+    <div class="material-card">
+      <div class="icon">🪛</div>
+      <h3>Werkzeug</h3>
+      <p>Schweißgerät, Flex, Bohrmaschine, Säge, Schraubenschlüssel, Winkelschleifer, Schutzausrüstung.</p>
+      <span class="source">→ hast du alles</span>
+    </div>
+    <div class="material-card">
+      <div class="icon">🎨</div>
+      <h3>Farbe / Schutzlack</h3>
+      <p>Rostschutzfarbe für Metall, optional bunte Akzentfarbe für einzelne Speichen oder Felgen.</p>
+      <span class="source">→ Baumarkt</span>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGRAM -->
+<section class="section">
+  <div class="section-label">Aufbau Übersicht</div>
+  <h2>WIE ES AUSSIEHT</h2>
+  <div class="diagram-box">
+    <svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
+      <!-- Frame -->
+      <rect x="30" y="20" width="16" height="280" fill="#c0392b" rx="3"/>
+      <rect x="454" y="20" width="16" height="280" fill="#c0392b" rx="3"/>
+      <rect x="30" y="20" width="440" height="16" fill="#c0392b" rx="3"/>
+      <rect x="30" y="284" width="440" height="16" fill="#c0392b" rx="3"/>
+
+      <!-- Wheel 1 - big left -->
+      <circle cx="160" cy="160" r="90" stroke="#ecf0f1" stroke-width="3" fill="none"/>
+      <circle cx="160" cy="160" r="12" fill="#ecf0f1"/>
+      <line x1="160" y1="72" x2="160" y2="248" stroke="#ecf0f1" stroke-width="1.5"/>
+      <line x1="72" y1="160" x2="248" y2="160" stroke="#ecf0f1" stroke-width="1.5"/>
+      <line x1="97" y1="97" x2="223" y2="223" stroke="#ecf0f1" stroke-width="1.5"/>
+      <line x1="223" y1="97" x2="97" y2="223" stroke="#ecf0f1" stroke-width="1.5"/>
+      <line x1="160" y1="72" x2="223" y2="97" stroke="#ecf0f1" stroke-width="1"/>
+      <line x1="248" y1="160" x2="223" y2="223" stroke="#ecf0f1" stroke-width="1"/>
+      <line x1="160" y1="248" x2="97" y2="223" stroke="#ecf0f1" stroke-width="1"/>
+      <line x1="72" y1="160" x2="97" y2="97" stroke="#ecf0f1" stroke-width="1"/>
+
+      <!-- Wheel 2 - small right top -->
+      <circle cx="360" cy="100" r="52" stroke="#f39c12" stroke-width="2.5" fill="none"/>
+      <circle cx="360" cy="100" r="8" fill="#f39c12"/>
+      <line x1="360" y1="48" x2="360" y2="152" stroke="#f39c12" stroke-width="1.5"/>
+      <line x1="308" y1="100" x2="412" y2="100" stroke="#f39c12" stroke-width="1.5"/>
+      <line x1="323" y1="63" x2="397" y2="137" stroke="#f39c12" stroke-width="1"/>
+      <line x1="397" y1="63" x2="323" y2="137" stroke="#f39c12" stroke-width="1"/>
+
+      <!-- Wheel 3 - small right bottom -->
+      <circle cx="370" cy="230" r="44" stroke="#95a5a6" stroke-width="2" fill="none"/>
+      <circle cx="370" cy="230" r="7" fill="#95a5a6"/>
+      <line x1="370" y1="186" x2="370" y2="274" stroke="#95a5a6" stroke-width="1.5"/>
+      <line x1="326" y1="230" x2="414" y2="230" stroke="#95a5a6" stroke-width="1.5"/>
+      <line x1="339" y1="199" x2="401" y2="261" stroke="#95a5a6" stroke-width="1"/>
+      <line x1="401" y1="199" x2="339" y2="261" stroke="#95a5a6" stroke-width="1"/>
+
+      <!-- Chain connections (dashed) -->
+      <path d="M 248 140 Q 290 115 308 100" stroke="#f39c12" stroke-width="2" fill="none" stroke-dasharray="6,4"/>
+      <path d="M 248 185 Q 295 210 326 230" stroke="#95a5a6" stroke-width="2" fill="none" stroke-dasharray="6,4"/>
+
+      <!-- Labels -->
+      <text x="160" y="270" text-anchor="middle" fill="#ecf0f1" font-family="monospace" font-size="11" opacity="0.7">Großes Rad (26")</text>
+      <text x="360" y="56" text-anchor="middle" fill="#f39c12" font-family="monospace" font-size="10" opacity="0.7">Klein (20")</text>
+      <text x="370" y="282" text-anchor="middle" fill="#95a5a6" font-family="monospace" font-size="10" opacity="0.7">Klein (16")</text>
+      <text x="280" y="175" text-anchor="middle" fill="#f39c12" font-family="monospace" font-size="9" opacity="0.6">Kette</text>
+
+      <!-- Arrows indicating spin -->
+      <path d="M 200 80 A 50 50 0 0 1 235 115" stroke="#c0392b" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#c0392b"/>
+        </marker>
+      </defs>
+      <text x="215" y="75" fill="#c0392b" font-family="monospace" font-size="10">drehen!</text>
+    </svg>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="section">
+  <div class="section-label">Schritt für Schritt</div>
+  <h2>BAUANLEITUNG</h2>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-number">01</div>
+      <div class="step-content">
+        <h3>Rahmen bauen</h3>
+        <p>Bau zuerst den Grundrahmen – das ist die Wand, an der alles hängt. Entweder aus Kanthölzern (80×40mm) als Rechteck verschraubt (ca. 120×100cm), oder du schweißt einen Rahmen aus Vierkantrohr. Der Rahmen muss stabil stehen – am besten mit zwei Füßen unten die du nach vorne und hinten ausstellst, wie ein Bilderrahmen.</p>
+        <div class="step-tip">💡 Tipp: Wenn du Holz nimmst, kannst du die Achsen aus Metallrohr einfach mit Schellen befestigen – kein Schweißen nötig für den Rahmen!</div>
+        <div class="step-tools">
+          <span class="tool-tag">Säge</span>
+          <span class="tool-tag">Bohrmaschine</span>
+          <span class="tool-tag">Schrauben</span>
+          <span class="tool-tag">oder Schweißgerät</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">02</div>
+      <div class="step-content">
+        <h3>Achsen einbauen</h3>
+        <p>Für jedes Fahrradrad brauchst du eine Achse – ein Metallrohr oder Rundstahl, das durch die Nabe (Mittelloch) des Rads passt. Das Rohr wird links und rechts am Rahmen befestigt, das Rad hängt dazwischen und kann sich frei drehen. Wichtig: Die Nabe muss locker auf der Achse laufen – also kein zu straffer Sitz, sonst dreht nichts mehr.</p>
+        <div class="step-tip">💡 Tipp: Nimm die originalen Achsmuttern vom Fahrrad als Abstandhalter – die sind genau auf die Nabengröße abgestimmt.</div>
+        <div class="step-tools">
+          <span class="tool-tag">Flex</span>
+          <span class="tool-tag">Bohrmaschine</span>
+          <span class="tool-tag">Schweißgerät</span>
+          <span class="tool-tag">Schraubenschlüssel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">03</div>
+      <div class="step-content">
+        <h3>Räder positionieren & aufhängen</h3>
+        <p>Hänge zuerst das größte Rad in die Mitte oder links. Die kleineren Räder kommen daneben – so dass sich die Zähne (Ritzel) oder Ketten verbinden können. Achte darauf, dass die Ritzel-Zähne der Räder in einer Ebene liegen, sonst springt die Kette ab. Probiere die Position erstmal aus bevor du alles fest machst.</p>
+        <div class="step-tip">💡 Tipp: Räder ohne Ritzel kannst du trotzdem per Kette verbinden – einfach die Kette um die Felge legen und mit einem Steg führen.</div>
+        <div class="step-tools">
+          <span class="tool-tag">Hände</span>
+          <span class="tool-tag">Wasserwaage</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">04</div>
+      <div class="step-content">
+        <h3>Ketten verbinden</h3>
+        <p>Jetzt das Herzstück: Verbinde die Räder mit Fahrradketten. Das große Rad treibt die kleinen an – wenn jemand das große Rad dreht, drehen sich alle anderen mit. Kette auf richtige Länge bringen (mit Kettennieter kürzen), dann mit einem Kettenschloss schließen. Keine Nieter? Auch mit Draht kann man Räder grob verbinden – sieht industrial aus.</p>
+        <div class="step-tip">⚠️ Die Kette muss leicht gespannt sein – zu locker springt sie ab, zu stramm macht alles schwer zu drehen.</div>
+        <div class="step-tools">
+          <span class="tool-tag">Kettennieter</span>
+          <span class="tool-tag">Kettenschloss</span>
+          <span class="tool-tag">Zange</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">05</div>
+      <div class="step-content">
+        <h3>Testen & optimieren</h3>
+        <p>Drehe die Räder und schau was passiert. Hakt es irgendwo? Schleift eine Kette? Kippelt der Rahmen? Alles noch mal anpassen bevor du lackierst. Lass jemanden von außen schauen – frische Augen sehen sofort was nicht stimmt. Das ist die wichtigste Phase!</p>
+        <div class="step-tip">💡 Ziel: Jemand der noch nie dein Projekt gesehen hat, soll intuitiv kapieren dass er das Rad drehen soll. Teste das mit Freunden!</div>
+        <div class="step-tools">
+          <span class="tool-tag">Geduld</span>
+          <span class="tool-tag">Testpublikum</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">06</div>
+      <div class="step-content">
+        <h3>Schleifen & Lackieren</h3>
+        <p>Alle scharfen Kanten mit der Flex oder Feile entschärfen – wichtig fürs Festival! Dann Rostschutzfarbe auf alle Metallteile. Für den Look: entweder alles matt schwarz lackieren (sieht brutal industrial aus), oder einzelne Speichen in knalligen Farben (rot, gelb, weiß) für Wow-Effekt auf Festival. Die Felgen können Rostoptik bleiben – das ist authentisch.</p>
+        <div class="step-tip">💡 Spray-Lack in Signalrot oder Signalgelb kostet wenig und macht riesigen optischen Unterschied.</div>
+        <div class="step-tools">
+          <span class="tool-tag">Flex / Feile</span>
+          <span class="tool-tag">Schleifpapier</span>
+          <span class="tool-tag">Rostschutzfarbe</span>
+          <span class="tool-tag">Spraylack</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">07</div>
+      <div class="step-content">
+        <h3>Transport & Aufbau</h3>
+        <p>Der Rahmen sollte zerlegbar sein – also Kanten verschrauben statt schweißen, damit du alles flach im Auto oder Anhänger transportieren kannst. Am Festival brauchst du ca. 30 Minuten zum Aufbau. Pack Ersatzkettenschlösser ein – auf dem Festival ist immer irgendwas kaputt.</p>
+        <div class="step-tip">💡 Schraub ein Schild oder Metallschild ran: "DREH MICH" – viele Leute auf Festivals sind zu schüchtern ohne Aufforderung.</div>
+        <div class="step-tools">
+          <span class="tool-tag">Schraubenschlüssel</span>
+          <span class="tool-tag">Ersatzteile</span>
+          <span class="tool-tag">Schild</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="section">
+  <div class="section-label">Wichtig</div>
+  <h2>SICHERHEIT</h2>
+
+  <div class="safety-list">
+    <div class="safety-item">
+      <div class="safety-icon">🥽</div>
+      <p><strong>Beim Bauen:</strong> Schutzbrille beim Flexen und Schweißen. Schweißhandschuhe. Keine losen Klamotten in der Nähe von drehenden Teilen.</p>
+    </div>
+    <div class="safety-item">
+      <div class="safety-icon">✋</div>
+      <p><strong>Am Festival:</strong> Alle scharfen Kanten abschleifen oder mit Kantenschutz abdecken. Speichenenden der Räder müssen abgestumpft sein – niemand soll sich aufschneiden.</p>
+    </div>
+    <div class="safety-item">
+      <div class="safety-icon">🔧</div>
+      <p><strong>Stabilität:</strong> Der Rahmen muss kippsicher sein – besonders wenn Kinder dran drehen. Füße weit genug ausgestellt, oder Sandsäcke als Ballast unten.</p>
+    </div>
+    <div class="safety-item">
+      <div class="safety-icon">⛓️</div>
+      <p><strong>Ketten:</strong> Ketten müssen so geführt sein, dass man keine Finger reinbekommt. Kettenschutz aus Blech oder Holz davor setzen wenn nötig.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <h2>JETZT LOSLEGEN</h2>
+  <p>Macher Festival · Ferropolis · 6.–9. August 2026</p>
+  <p style="margin-top:8px; font-size:10px; letter-spacing:2px; color:#333;">SPIN WALL · DIY TUTORIAL · REAL LIFE GUYS COMMUNITY</p>
+</footer>
+
+</body>
+</html>
