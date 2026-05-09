@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wunschrad – Bau-Tutorial von luwymc</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Righteous&family=IBM+Plex+Mono:wght@400;700&display=swap');
+
+  :root {
+    --blue: #1a6bcc;
+    --deep: #080c14;
+    --panel: #0d1220;
+    --border: #1a2440;
+    --muted: #557;
+    --light: #e8eef8;
+    --green: #2ecc71;
+    --gold: #f0c040;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--deep); color: var(--light); font-family: 'IBM Plex Mono', monospace; overflow-x: hidden; }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .hero {
+    padding: 80px 48px 60px;
+    border-bottom: 2px solid var(--blue);
+    background: radial-gradient(ellipse at 80% 40%, rgba(26,107,204,0.12) 0%, transparent 60%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--blue); text-transform: uppercase; margin-bottom: 24px; }
+
+  .hero h1 { font-family: 'Righteous', sans-serif; font-size: clamp(72px, 14vw, 160px); line-height: 0.88; color: var(--light); }
+  .hero h1 em { font-style: normal; color: var(--blue); display: block; }
+
+  .hero-desc { margin-top: 32px; font-size: 12px; line-height: 1.9; color: var(--muted); max-width: 480px; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .pill { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; padding: 7px 16px; border: 1px solid var(--border); color: var(--muted); }
+  .pill.blue { border-color: var(--blue); color: var(--blue); }
+
+  /* Spinning wheel decoration */
+  .wheel-deco {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    height: 320px;
+    opacity: 0.05;
+    animation: spin 25s linear infinite;
+  }
+  @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+  /* DIAGRAM */
+  .diagram-box { background: var(--panel); border: 1px solid var(--border); padding: 48px 40px; max-width: 900px; margin: 0 auto; }
+  .diagram-box svg { width: 100%; max-width: 600px; display: block; margin: 0 auto; }
+
+  .wrapper { max-width: 900px; margin: 0 auto; padding: 0 40px; }
+
+  .section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 9px; letter-spacing: 5px; color: var(--blue); text-transform: uppercase; margin-bottom: 10px; }
+  .section h2 { font-family: 'Righteous', sans-serif; font-size: clamp(32px, 5vw, 56px); letter-spacing: 1px; margin-bottom: 32px; line-height: 1; }
+
+  .mat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .mat-card { background: var(--panel); border: 1px solid var(--border); padding: 22px 18px; transition: border-color 0.2s, transform 0.2s; }
+  .mat-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+  .mat-card .ico { font-size: 26px; margin-bottom: 10px; }
+  .mat-card h3 { font-family: 'Righteous', sans-serif; font-size: 18px; margin-bottom: 6px; }
+  .mat-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
+  .mat-card .src { display: inline-block; margin-top: 10px; font-size: 9px; letter-spacing: 2px; color: var(--green); text-transform: uppercase; }
+
+  .step { display: grid; grid-template-columns: 70px 1fr; gap: 28px; padding: 40px 0; border-bottom: 1px solid #0d1220; }
+  .step-num { font-family: 'Righteous', sans-serif; font-size: 56px; color: var(--blue); opacity: 0.5; line-height: 1; }
+  .step h3 { font-family: 'Righteous', sans-serif; font-size: 26px; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .step p { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 560px; }
+  .tip { margin-top: 14px; padding: 12px 16px; border-left: 3px solid var(--blue); background: rgba(26,107,204,0.05); font-size: 11px; color: var(--blue); line-height: 1.7; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .tag { font-size: 9px; letter-spacing: 2px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; }
+
+  .safety-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 20px; }
+  .safety-card { background: var(--panel); border: 1px solid var(--border); padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
+  .safety-card .ico { font-size: 22px; flex-shrink: 0; }
+  .safety-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
+
+  .footer { padding: 80px 40px; text-align: center; background: #050810; border-top: 2px solid var(--blue); }
+  .footer h2 { font-family: 'Righteous', sans-serif; font-size: clamp(40px, 9vw, 100px); color: var(--blue); letter-spacing: 2px; line-height: 1; }
+  .footer p { font-size: 11px; color: var(--muted); margin-top: 16px; letter-spacing: 2px; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 60px 24px 48px; }
+    .wrapper { padding: 0 24px; }
+    .step { grid-template-columns: 48px 1fr; gap: 14px; }
+    .step-num { font-size: 40px; }
+    .wheel-deco { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-eyebrow">Macher Festival Projekt · DIY Tutorial</div>
+  <h1>WUNSCH<em>RAD</em></h1>
+  <p class="hero-desc">Ein großes stehendes Rad aus Fahrradfelgen – Leute hängen Zettel, Wünsche oder kleine Objekte rein und drehen es. Fotogen, simpel, transportierbar und ein echter Hingucker.</p>
+  <div class="pill-row">
+    <div class="pill blue">Schweißen</div>
+    <div class="pill blue">Flexen</div>
+    <div class="pill">~1 Woche Bauzeit</div>
+    <div class="pill">ca. 1m Durchmesser</div>
+    <div class="pill">Transportierbar</div>
+  </div>
+
+  <svg class="wheel-deco" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="95" stroke="white" stroke-width="2" fill="none"/>
+    <circle cx="100" cy="100" r="10" fill="white"/>
+    <line x1="100" y1="10" x2="100" y2="190" stroke="white" stroke-width="1.5"/>
+    <line x1="10" y1="100" x2="190" y2="100" stroke="white" stroke-width="1.5"/>
+    <line x1="27" y1="27" x2="173" y2="173" stroke="white" stroke-width="1.5"/>
+    <line x1="173" y1="27" x2="27" y2="173" stroke="white" stroke-width="1.5"/>
+    <line x1="100" y1="10" x2="173" y2="60" stroke="white" stroke-width="1"/>
+    <line x1="173" y1="60" x2="173" y2="140" stroke="white" stroke-width="1"/>
+    <line x1="173" y1="140" x2="100" y2="190" stroke="white" stroke-width="1"/>
+    <line x1="100" y1="190" x2="27" y2="140" stroke="white" stroke-width="1"/>
+    <line x1="27" y1="140" x2="27" y2="60" stroke="white" stroke-width="1"/>
+    <line x1="27" y1="60" x2="100" y2="10" stroke="white" stroke-width="1"/>
+  </svg>
+</section>
+
+<div class="diagram-box">
+  <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Stand -->
+    <line x1="300" y1="360" x2="220" y2="390" stroke="#1a6bcc" stroke-width="6" stroke-linecap="round"/>
+    <line x1="300" y1="360" x2="380" y2="390" stroke="#1a6bcc" stroke-width="6" stroke-linecap="round"/>
+    <line x1="300" y1="160" x2="300" y2="360" stroke="#555" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Main wheel -->
+    <circle cx="300" cy="150" r="130" stroke="#1a6bcc" stroke-width="3" fill="none"/>
+    <circle cx="300" cy="150" r="14" fill="#1a6bcc"/>
+
+    <!-- Spokes -->
+    <line x1="300" y1="22" x2="300" y2="278" stroke="#1a6bcc" stroke-width="2"/>
+    <line x1="172" y1="150" x2="428" y2="150" stroke="#1a6bcc" stroke-width="2"/>
+    <line x1="209" y1="59" x2="391" y2="241" stroke="#1a6bcc" stroke-width="1.5"/>
+    <line x1="391" y1="59" x2="209" y2="241" stroke="#1a6bcc" stroke-width="1.5"/>
+    <line x1="300" y1="22" x2="391" y2="59" stroke="#1a6bcc" stroke-width="1"/>
+    <line x1="428" y1="150" x2="391" y2="241" stroke="#1a6bcc" stroke-width="1"/>
+    <line x1="300" y1="278" x2="209" y2="241" stroke="#1a6bcc" stroke-width="1"/>
+    <line x1="172" y1="150" x2="209" y2="59" stroke="#1a6bcc" stroke-width="1"/>
+
+    <!-- Wish notes hanging -->
+    <rect x="310" y="30" width="30" height="40" rx="2" fill="#f0c040" opacity="0.8"/>
+    <line x1="325" y1="22" x2="325" y2="30" stroke="#888" stroke-width="1.5"/>
+    <rect x="395" y="65" width="28" height="36" rx="2" fill="#e85d04" opacity="0.7"/>
+    <line x1="409" y1="59" x2="409" y2="65" stroke="#888" stroke-width="1.5"/>
+    <rect x="158" y="155" width="26" height="34" rx="2" fill="#2ecc71" opacity="0.7"/>
+    <line x1="172" y1="150" x2="172" y2="155" stroke="#888" stroke-width="1.5"/>
+
+    <!-- Labels -->
+    <text x="300" y="395" text-anchor="middle" fill="#555" font-family="monospace" font-size="11">Standfuß (A-Bock)</text>
+    <text x="470" y="155" fill="#1a6bcc" font-family="monospace" font-size="10">Felge</text>
+    <text x="335" y="20" fill="#f0c040" font-family="monospace" font-size="10">Wunschzettel</text>
+    <text x="300" y="145" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">Achse</text>
+
+    <!-- Arrow spin -->
+    <path d="M 400 80 A 60 60 0 0 1 420 130" stroke="#1a6bcc" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+    <defs>
+      <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#1a6bcc"/>
+      </marker>
+    </defs>
+    <text x="430" y="105" fill="#1a6bcc" font-family="monospace" font-size="10">drehen!</text>
+  </svg>
+</div>
+
+<div class="wrapper">
+
+<section class="section">
+  <div class="section-label">Was du brauchst</div>
+  <h2>MATERIAL & WERKZEUG</h2>
+  <div class="mat-grid">
+    <div class="mat-card">
+      <div class="ico">🚲</div>
+      <h3>Fahrradfelgen</h3>
+      <p>3–4 gleichgroße Felgen (am besten 26" oder 28"). Speichen können fehlen – nur die Felge zählt. Je mehr Felgen, desto breiter das Rad.</p>
+      <span class="src">→ Wertstoffhof</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🔩</div>
+      <h3>Achse / Metallrohr</h3>
+      <p>Ein stabiles Metallrohr als Achse (~2cm Durchmesser). Muss durch die Naben passen und im Standfuß gelagert werden.</p>
+      <span class="src">→ Wertstoffhof / Baumarkt</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🪵</div>
+      <h3>Standfuß</h3>
+      <p>Zwei A-Böcke aus Holz oder Metall, die das Rad aufrecht halten. Müssen stabil genug sein damit das Rad sich dreht ohne umzufallen.</p>
+      <span class="src">→ Holzreste / Wertstoffhof</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🪢</div>
+      <h3>Draht / Schnur</h3>
+      <p>Zum Befestigen der Wunschzettel an den Speichen oder der Felge. Dünner Blumendraht funktioniert gut.</p>
+      <span class="src">→ Baumarkt</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🪚</div>
+      <h3>Werkzeug</h3>
+      <p>Schweißgerät für Metallverbindungen, Flex, Bohrmaschine, Schraubenschlüssel.</p>
+      <span class="src">→ hast du alles</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🎨</div>
+      <h3>Farbe & Zettel</h3>
+      <p>Felgen bunt lackieren. Kleine Zettel und Stifte bereitstellen damit Leute ihre Wünsche aufschreiben können.</p>
+      <span class="src">→ Baumarkt / Schreibwaren</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Schritt für Schritt</div>
+  <h2>BAUANLEITUNG</h2>
+
+  <div class="step">
+    <div class="step-num">01</div>
+    <div>
+      <h3>Felgen zusammenschweißen</h3>
+      <p>Nimm 3–4 gleichgroße Felgen und schweiß sie nebeneinander zusammen – so entsteht ein breites, stabiles Rad. Die Felgen an mehreren Punkten verschweißen (mindestens 4 Punkte gleichmäßig verteilt). Das gibt dem Rad seine Stabilität.</p>
+      <div class="tip">💡 Tipp: Leg die Felgen auf einem flachen Boden aus bevor du schweißt – so bleiben sie gerade und in einer Ebene.</div>
+      <div class="tags"><span class="tag">Schweißgerät</span><span class="tag">Schutzbrille</span><span class="tag">Handschuhe</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">02</div>
+    <div>
+      <h3>Achse einbauen</h3>
+      <p>Ein Metallrohr durch alle Naben (Mittellöcher) der Felgen führen. Das Rohr muss auf beiden Seiten etwas überstehen – dort wird es später im Standfuß gelagert. Die Naben sollten sich frei auf der Achse drehen können.</p>
+      <div class="tip">💡 Wenn die Naben zu locker sitzen: mit Unterlegscheiben auffüllen. Zu stramm: Achse etwas abschleifen.</div>
+      <div class="tags"><span class="tag">Metallrohr</span><span class="tag">Unterlegscheiben</span><span class="tag">Flex</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">03</div>
+    <div>
+      <h3>Standfuß bauen</h3>
+      <p>Bau zwei identische A-Böcke aus Holz oder Metall. Oben an jedem A-Bock eine Kerbe oder eine U-förmige Halterung für die Achse einbauen. Die Achse liegt dann in diesen Kerben – das Rad kann sich frei drehen. Standfuß breit genug machen damit nichts kippt.</p>
+      <div class="tip">💡 Die Kerben oben am A-Bock mit etwas Metall verstärken – Holz alleine scheuert sich schnell durch wenn das Rad sich dreht.</div>
+      <div class="tags"><span class="tag">Säge</span><span class="tag">Bohrmaschine</span><span class="tag">Schweißgerät</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">04</div>
+    <div>
+      <h3>Lackieren</h3>
+      <p>Jetzt alles schön machen! Felgen in einer oder mehreren Farben lackieren. Speichen können in Kontrastfarbe sein. Für den Festival-Look: Matt schwarz mit blauen oder goldenen Akzenten. Oder bunt und verspielt – passt auch gut zum Wunschrad-Konzept.</p>
+      <div class="tip">💡 Lass alles komplett trocknen bevor du zusammenbaust – frische Farbe klebt sonst am Standfuß.</div>
+      <div class="tags"><span class="tag">Spraylack</span><span class="tag">Schleifpapier</span><span class="tag">Zeitung</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">05</div>
+    <div>
+      <h3>Wunschzettel-System</h3>
+      <p>An den Speichen kleine Klammern, Haken oder Drahtschlaufen befestigen – dort können Leute ihre Zettel einhängen. Einen kleinen Tisch oder eine Kiste danebenstellen mit Zetteln, Stiften und einer Anleitung: "Schreib deinen Wunsch auf – häng ihn ans Rad – dreh es!"</p>
+      <div class="tip">💡 Wasserfeste Zettel (laminiert oder aus Pappe) halten länger – besonders wenn es regnet.</div>
+      <div class="tags"><span class="tag">Draht</span><span class="tag">Zange</span><span class="tag">Zettel & Stifte</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">06</div>
+    <div>
+      <h3>Schild & Finishing</h3>
+      <p>Ein großes Schild oben ans Rad: "WUNSCHRAD – Dreh mich!" Erkläre kurz das Konzept. Je klarer die Ansage, desto mehr Leute machen mit. Das Rad sollte sich leicht drehen lassen – teste es mehrmals und öl die Achse wenn nötig.</p>
+      <div class="tip">💡 Nachts mit LED-Streifen beleuchten – sieht auf einem Festival absolut magisch aus!</div>
+      <div class="tags"><span class="tag">Schild</span><span class="tag">LED optional</span><span class="tag">Öl für Achse</span></div>
+    </div>
+  </div>
+
+</section>
+
+<section class="section">
+  <div class="section-label">Nicht vergessen</div>
+  <h2>SICHERHEIT</h2>
+  <div class="safety-grid">
+    <div class="safety-card">
+      <div class="ico">✂️</div>
+      <p><strong>Kanten:</strong> Alle Schweißnähte und Felgenkanten glatt schleifen. Niemand soll sich an scharfen Stellen schneiden.</p>
+    </div>
+    <div class="safety-card">
+      <div class="ico">🏗️</div>
+      <p><strong>Standfestigkeit:</strong> Das Rad ist schwer – der Standfuß muss absolut sicher stehen, auch wenn Leute dran drehen oder ziehen.</p>
+    </div>
+    <div class="safety-card">
+      <div class="ico">🔧</div>
+      <p><strong>Achse sichern:</strong> Die Achse mit Splint oder Mutter sichern damit sie nicht rausrutscht wenn das Rad sich dreht.</p>
+    </div>
+    <div class="safety-card">
+      <div class="ico">🥽</div>
+      <p><strong>Beim Bauen:</strong> Schutzbrille und Handschuhe beim Schweißen und Flexen. Immer.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <h2>DREH<br>DEIN RAD</h2>
+  <p>Macher Festival · Ferropolis · 6.–9. August 2026</p>
+  <p style="margin-top:16px; font-size:11px; letter-spacing:3px; color:var(--blue);">von luwymc</p>
+</footer>
+
+</body>
+</html>

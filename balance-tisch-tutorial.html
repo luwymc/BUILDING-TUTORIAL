@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balance-Tisch – Bau-Tutorial von luwymc</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Righteous&family=IBM+Plex+Mono:wght@400;700&display=swap');
+
+  :root {
+    --green: #16a34a;
+    --deep: #080e0a;
+    --panel: #0d140f;
+    --border: #1a2e1e;
+    --muted: #456;
+    --light: #e8f4ea;
+    --orange: #e85d04;
+    --yellow: #f0c040;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--deep); color: var(--light); font-family: 'IBM Plex Mono', monospace; overflow-x: hidden; }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .hero {
+    padding: 80px 48px 60px;
+    border-bottom: 2px solid var(--green);
+    background: radial-gradient(ellipse at 30% 60%, rgba(22,163,74,0.1) 0%, transparent 60%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--green); text-transform: uppercase; margin-bottom: 24px; }
+  .hero h1 { font-family: 'Righteous', sans-serif; font-size: clamp(72px, 14vw, 160px); line-height: 0.88; color: var(--light); }
+  .hero h1 em { font-style: normal; color: var(--green); display: block; }
+  .hero-desc { margin-top: 32px; font-size: 12px; line-height: 1.9; color: var(--muted); max-width: 480px; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .pill { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; padding: 7px 16px; border: 1px solid var(--border); color: var(--muted); }
+  .pill.green { border-color: var(--green); color: var(--green); }
+
+  /* Balance animation */
+  .balance-deco {
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.05;
+    width: 280px;
+    animation: tilt 4s ease-in-out infinite;
+  }
+  @keyframes tilt {
+    0%, 100% { transform: translateY(-50%) rotate(-8deg); }
+    50% { transform: translateY(-50%) rotate(8deg); }
+  }
+
+  .diagram-box { background: var(--panel); border: 1px solid var(--border); padding: 48px 40px; max-width: 900px; margin: 0 auto; }
+  .diagram-box svg { width: 100%; max-width: 600px; display: block; margin: 0 auto; }
+
+  .wrapper { max-width: 900px; margin: 0 auto; padding: 0 40px; }
+
+  .section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 9px; letter-spacing: 5px; color: var(--green); text-transform: uppercase; margin-bottom: 10px; }
+  .section h2 { font-family: 'Righteous', sans-serif; font-size: clamp(32px, 5vw, 56px); letter-spacing: 1px; margin-bottom: 32px; line-height: 1; }
+
+  .mat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .mat-card { background: var(--panel); border: 1px solid var(--border); padding: 22px 18px; transition: border-color 0.2s, transform 0.2s; }
+  .mat-card:hover { border-color: var(--green); transform: translateY(-2px); }
+  .mat-card .ico { font-size: 26px; margin-bottom: 10px; }
+  .mat-card h3 { font-family: 'Righteous', sans-serif; font-size: 18px; margin-bottom: 6px; }
+  .mat-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
+  .mat-card .src { display: inline-block; margin-top: 10px; font-size: 9px; letter-spacing: 2px; color: #2ecc71; text-transform: uppercase; }
+
+  .step { display: grid; grid-template-columns: 70px 1fr; gap: 28px; padding: 40px 0; border-bottom: 1px solid #0d140f; }
+  .step-num { font-family: 'Righteous', sans-serif; font-size: 56px; color: var(--green); opacity: 0.5; line-height: 1; }
+  .step h3 { font-family: 'Righteous', sans-serif; font-size: 26px; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .step p { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 560px; }
+  .tip { margin-top: 14px; padding: 12px 16px; border-left: 3px solid var(--green); background: rgba(22,163,74,0.05); font-size: 11px; color: var(--green); line-height: 1.7; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .tag { font-size: 9px; letter-spacing: 2px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; }
+
+  .rules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 20px; }
+  .rule-card { background: var(--panel); border: 1px solid var(--border); padding: 20px; }
+  .rule-card h3 { font-family: 'Righteous', sans-serif; font-size: 18px; color: var(--green); margin-bottom: 8px; }
+  .rule-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
+
+  .safety-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 20px; }
+  .safety-card { background: var(--panel); border: 1px solid var(--border); padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
+  .safety-card .ico { font-size: 22px; flex-shrink: 0; }
+  .safety-card p { font-size: 11px; color: var(--muted); line-height: 1.7; }
+
+  .footer { padding: 80px 40px; text-align: center; background: #050a06; border-top: 2px solid var(--green); }
+  .footer h2 { font-family: 'Righteous', sans-serif; font-size: clamp(40px, 9vw, 100px); color: var(--green); letter-spacing: 2px; line-height: 1; }
+  .footer p { font-size: 11px; color: var(--muted); margin-top: 16px; letter-spacing: 2px; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 60px 24px 48px; }
+    .wrapper { padding: 0 24px; }
+    .step { grid-template-columns: 48px 1fr; gap: 14px; }
+    .step-num { font-size: 40px; }
+    .balance-deco { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-eyebrow">Macher Festival Projekt · DIY Tutorial</div>
+  <h1>BALANCE<em>TISCH</em></h1>
+  <p class="hero-desc">Ein Tisch auf einer Mittelachse – wie eine Wippe aber rund. Zwei Spieler stehen sich gegenüber und müssen Objekte platzieren ohne dass der Tisch kippt. Brutal einfach zu bauen, brutal unterhaltsam auf Festivals.</p>
+  <div class="pill-row">
+    <div class="pill green">Holz</div>
+    <div class="pill green">Schweißen</div>
+    <div class="pill">~3 Tage Bauzeit</div>
+    <div class="pill">1,2m Durchmesser</div>
+    <div class="pill">Super transportierbar</div>
+  </div>
+
+  <svg class="balance-deco" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="80" width="240" height="20" rx="4" fill="white"/>
+    <line x1="140" y1="100" x2="140" y2="180" stroke="white" stroke-width="8"/>
+    <polygon points="100,180 180,180 140,200" fill="white"/>
+    <rect x="30" y="50" width="60" height="30" rx="3" fill="white" opacity="0.5"/>
+    <rect x="190" y="60" width="50" height="20" rx="3" fill="white" opacity="0.3"/>
+  </svg>
+</section>
+
+<div class="diagram-box">
+  <svg viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+    <!-- Table surface - slightly tilted -->
+    <ellipse cx="300" cy="160" rx="220" ry="30" fill="none" stroke="#16a34a" stroke-width="3"/>
+    <rect x="80" y="145" width="440" height="30" rx="4" fill="#16a34a" opacity="0.15" stroke="#16a34a" stroke-width="2"/>
+
+    <!-- Center pivot -->
+    <line x1="300" y1="175" x2="300" y2="290" stroke="#555" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="300" cy="175" rx="18" ry="10" fill="#16a34a"/>
+
+    <!-- Base -->
+    <ellipse cx="300" cy="295" rx="80" ry="15" fill="#333" stroke="#555" stroke-width="2"/>
+    <line x1="230" y1="295" x2="200" y2="320" stroke="#555" stroke-width="6"/>
+    <line x1="370" y1="295" x2="400" y2="320" stroke="#555" stroke-width="6"/>
+    <line x1="200" y1="320" x2="400" y2="320" stroke="#555" stroke-width="4"/>
+
+    <!-- Objects on table -->
+    <rect x="130" y="128" width="35" height="25" rx="3" fill="#e85d04" opacity="0.8"/>
+    <rect x="180" y="133" width="25" height="20" rx="3" fill="#f0c040" opacity="0.8"/>
+    <circle cx="400" cy="140" r="15" fill="#2ecc71" opacity="0.8"/>
+
+    <!-- Players -->
+    <circle cx="80" cy="120" r="20" fill="none" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,3"/>
+    <text x="80" y="125" text-anchor="middle" fill="#16a34a" font-family="monospace" font-size="11">P1</text>
+    <circle cx="520" cy="120" r="20" fill="none" stroke="#e85d04" stroke-width="2" stroke-dasharray="4,3"/>
+    <text x="520" y="125" text-anchor="middle" fill="#e85d04" font-family="monospace" font-size="11">P2</text>
+
+    <!-- Arrows -->
+    <path d="M 100 130 L 120 148" stroke="#16a34a" stroke-width="1.5" marker-end="url(#g)"/>
+    <path d="M 500 130 L 480 148" stroke="#e85d04" stroke-width="1.5" marker-end="url(#o)"/>
+
+    <defs>
+      <marker id="g" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
+      <marker id="o" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e85d04"/></marker>
+    </defs>
+
+    <!-- Labels -->
+    <text x="300" y="340" text-anchor="middle" fill="#555" font-family="monospace" font-size="11">Kipppunkt in der Mitte</text>
+    <text x="175" y="120" text-anchor="middle" fill="#f0c040" font-family="monospace" font-size="10">Objekte</text>
+  </svg>
+</div>
+
+<div class="wrapper">
+
+<section class="section">
+  <div class="section-label">Was du brauchst</div>
+  <h2>MATERIAL & WERKZEUG</h2>
+  <div class="mat-grid">
+    <div class="mat-card">
+      <div class="ico">🪵</div>
+      <h3>Tischplatte</h3>
+      <p>Runde Holzplatte, ca. 1–1,2m Durchmesser, 18–22mm dick. Aus Multiplexplatten zuschneiden oder eine alte Tischplatte verwenden.</p>
+      <span class="src">→ Baumarkt / Wertstoffhof</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🔩</div>
+      <h3>Kipppunkt / Achse</h3>
+      <p>Ein stabiles Metallrohr oder eine Metallkugel als Kipppunkt unter der Mitte der Platte. Muss das Gewicht der Platte + Objekte tragen.</p>
+      <span class="src">→ Baumarkt / Schrottplatz</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🏗️</div>
+      <h3>Sockel / Fuß</h3>
+      <p>Ein stabiler Sockel der den Kipppunkt hält. Aus Holz oder Metall, ca. 60–80cm hoch. Muss absolut standfest sein.</p>
+      <span class="src">→ Holzreste / Wertstoffhof</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🎲</div>
+      <h3>Spielobjekte</h3>
+      <p>Verschiedene Objekte zum Platzieren: Holzklötze, Steine, Metallteile – in verschiedenen Gewichten und Größen für mehr Spielspaß.</p>
+      <span class="src">→ Wertstoffhof / Basteln</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🪚</div>
+      <h3>Werkzeug</h3>
+      <p>Stichsäge für die runde Platte, Schweißgerät für den Metallsockel, Bohrmaschine, Schleifpapier.</p>
+      <span class="src">→ hast du alles</span>
+    </div>
+    <div class="mat-card">
+      <div class="ico">🎨</div>
+      <h3>Farbe</h3>
+      <p>Tischplatte mit Farbe oder Lack behandeln – für Outdoor-Einsatz wasserfesten Lack verwenden. Spielfeld aufmalen optional.</p>
+      <span class="src">→ Baumarkt</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Schritt für Schritt</div>
+  <h2>BAUANLEITUNG</h2>
+
+  <div class="step">
+    <div class="step-num">01</div>
+    <div>
+      <h3>Tischplatte zuschneiden</h3>
+      <p>Eine runde Platte aus Multiplex sägen. Den Mittelpunkt markieren (Schnur + Stift als Zirkel). Mit der Stichsäge ausschneiden. Alle Kanten sorgfältig schleifen damit keine Splitter entstehen. Die Platte sollte gleichmäßig rund sein – sonst kippt der Tisch immer zur selben Seite.</p>
+      <div class="tip">💡 Tipp: Den Mittelpunkt exakt bestimmen! Dafür zwei Durchmesser zeichnen – wo sie sich kreuzen ist die Mitte. Hier kommt später der Kipppunkt hin.</div>
+      <div class="tags"><span class="tag">Stichsäge</span><span class="tag">Schleifpapier</span><span class="tag">Bleistift</span><span class="tag">Schnur</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">02</div>
+    <div>
+      <h3>Kipppunkt bauen</h3>
+      <p>Der Kipppunkt ist das Herzstück. Einfachste Variante: Ein Metallrohr (~5cm Durchmesser) senkrecht auf den Sockel schweißen – oben kommt eine Halbkugel oder ein abgerundetes Ende drauf. Die Tischplatte liegt auf dieser Kuppel und kann sich in alle Richtungen kippen.</p>
+      <div class="tip">💡 Alternativ: Eine alte Bowlingkugel als Kipppunkt – die liegt in einer Schüssel und die Tischplatte liegt drauf. Low-tech aber funktioniert perfekt!</div>
+      <div class="tags"><span class="tag">Schweißgerät</span><span class="tag">Metallrohr</span><span class="tag">Flex</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">03</div>
+    <div>
+      <h3>Sockel bauen</h3>
+      <p>Ein stabiler Fuß der alles trägt. Aus Vierkantrohr ein H-förmiges oder kreuzförmiges Gestell schweißen. Ca. 70cm hoch, Füße mindestens 80cm weit auseinander. Gummifüße unten dran damit der Sockel nicht auf dem Boden rutscht wenn Leute wild spielen.</p>
+      <div class="tip">💡 Je breiter der Sockel, desto stabiler das ganze System. Lieber zu breit als zu schmal.</div>
+      <div class="tags"><span class="tag">Schweißgerät</span><span class="tag">Vierkantrohr</span><span class="tag">Gummifüße</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">04</div>
+    <div>
+      <h3>Tischplatte befestigen</h3>
+      <p>Die Tischplatte auf den Kipppunkt legen. Sie darf sich frei bewegen aber nicht komplett herunterfallen. Eine Sicherung einbauen: Ein Bolzen durch die Mitte der Platte in das Rohr – mit Spiel, damit die Platte noch kippen kann aber nicht abhebt.</p>
+      <div class="tip">⚠️ Wichtig: Die Platte muss auch bei starker Schieflage sicher bleiben – teste es mit deinem eigenen Körpergewicht!</div>
+      <div class="tags"><span class="tag">Bohrmaschine</span><span class="tag">Bolzen</span><span class="tag">Unterlegscheiben</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">05</div>
+    <div>
+      <h3>Lackieren & Spielfeld</h3>
+      <p>Tischplatte mit wasserfestem Lack behandeln. Optional: Ein Spielfeld draufmalen – Kreise die zeigen wo Spieler 1 und Spieler 2 ihre Objekte platzieren. Oder einfach eine Mittellinie. Hält den Spielfluss strukturierter.</p>
+      <div class="tip">💡 Schreib "BALANCE" groß in die Mitte – sieht auf Fotos mega aus und erklärt das Spiel ohne Worte.</div>
+      <div class="tags"><span class="tag">Wasserfester Lack</span><span class="tag">Farbe</span><span class="tag">Pinsel</span></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">06</div>
+    <div>
+      <h3>Spielobjekte & Regeln</h3>
+      <p>Verschiedene Objekte sammeln: Holzklötze, Steine, Metallteile, alte Werkzeuge – je unterschiedlicher das Gewicht, desto interessanter das Spiel. Ein Schild mit den Regeln aufstellen. Am besten einfach halten: "Abwechselnd ein Objekt platzieren – wer den Tisch zum Kippen bringt verliert!"</p>
+      <div class="tip">💡 Objekte in einer Kiste neben dem Tisch aufbewahren – mit einem Seil damit sie nicht weggetragen werden.</div>
+      <div class="tags"><span class="tag">Spielobjekte</span><span class="tag">Regelschild</span><span class="tag">Kiste</span></div>
+    </div>
+  </div>
+
+</section>
+
+<section class="section">
+  <div class="section-label">Spielregeln</div>
+  <h2>SO WIRD GESPIELT</h2>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <h3>Grundregel</h3>
+      <p>Zwei Spieler stehen sich gegenüber. Abwechselnd wird ein Objekt auf den Tisch gelegt. Wer den Tisch zum Kippen bringt, verliert die Runde.</p>
+    </div>
+    <div class="rule-card">
+      <h3>Variante: Aufbauen</h3>
+      <p>Objekte müssen aufeinander gestapelt werden – nicht nur nebeneinander. Macht es deutlich schwieriger und spektakulärer.</p>
+    </div>
+    <div class="rule-card">
+      <h3>Variante: Zeitlimit</h3>
+      <p>Jeder hat nur 5 Sekunden für seinen Zug. Wer zu lange überlegt verliert automatisch. Gut für große Zuschauermenge.</p>
+    </div>
+    <div class="rule-card">
+      <h3>Variante: Teams</h3>
+      <p>2 vs 2 oder 3 vs 3 – Teams beraten sich kurz und entscheiden gemeinsam welches Objekt sie legen. Macht es sozialer.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Nicht vergessen</div>
+  <h2>SICHERHEIT</h2>
+  <div class="safety-grid">
+    <div class="safety-card">
+      <div class="ico">🏗️</div>
+      <p><strong>Standfestigkeit:</strong> Der Sockel muss auch dann stehen wenn jemand aus Versehen dagegen läuft. Breite Füße, schwerer Sockel.</p>
+    </div>
+    <div class="safety-card">
+      <div class="ico">✂️</div>
+      <p><strong>Kanten:</strong> Alle Kanten der Tischplatte runden und schleifen. Keine scharfen Ecken an den Spielobjekten.</p>
+    </div>
+    <div class="safety-card">
+      <div class="ico">⬇️</div>
+      <p><strong>Fallende Objekte:</strong> Die Spielobjekte dürfen nicht zu schwer sein – wenn sie runterfallen soll niemand verletzt werden. Max. 1–2kg pro Objekt.</p>
+    </div>
+    <div class="safety-card">
+      <div class="ico">🥽</div>
+      <p><strong>Beim Bauen:</strong> Schutzbrille beim Sägen und Schweißen. Stichsäge immer vom Körper weg führen.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <h2>HALT DIE<br>BALANCE</h2>
+  <p>Macher Festival · Ferropolis · 6.–9. August 2026</p>
+  <p style="margin-top:16px; font-size:11px; letter-spacing:3px; color:var(--green);">von luwymc</p>
+</footer>
+
+</body>
+</html>
